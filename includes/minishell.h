@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/06/14 02:58:35 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/05 21:11:28 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define MINISHELL_H
 
 # include "../libft-42/libft.h"
-# include "./ft_malloc.h"
-# include "./token.h"
+# include "ft_malloc.h"
+# include "token.h"
 # include <stdio.h>
 # include <stdbool.h>
 # include <readline/readline.h>
@@ -56,7 +56,7 @@ void	add_var_back(t_env **lst, t_env *new);
 t_env	*ft_lstlast(t_env *node);
 
 t_token *strtoken(char *str);
-t_token *newtoken(char *variable);
+t_token *newtoken(t_flgs type,char *tok,int hdoc,int expnd);
 void	add_token_back(t_token **lst, t_token *new);
-t_token	*ft_lstlst(t_token *node);
+t_token	*ft_lstlst(t_token *lst);
 #endif

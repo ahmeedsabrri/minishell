@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/05 20:59:31 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/05 21:08:07 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ int which_flag(char c ,int flg)
 	while (str[++i])
 		if (str[i] == c)
 			break ;
-	(flg) && (i += 7);
+	if (flg)
+        i += 7;
 	return (i + 1);
 }
 void ft_initialize(t_init *init)
@@ -182,10 +183,9 @@ void lexer_1(t_init *in, char *tok)
 // main function that use everthing 
 t_token *strtoken(char *line)
 {
-    t_token *token;
     t_init init;
 
-    tf_initialize(&init);
+    ft_initialize(&init);
     while (line[++(init.i)])
     {
         if ((init.double_quote && line[init.i] =='\"') || (init.singl_quote && line[init.i] == '\''))
@@ -198,7 +198,7 @@ t_token *strtoken(char *line)
     if ((init.singl_quote || init.double_quote) || (init.op != init.cp))
 		return (ft_putstr_fd("Syntax : Quote Unfound\n", 2), NULL);
 	if (init.op != init.cp)
-		return (t_putstr_fd("Syntax : Need a parantes\n", 2), NULL);
-	addtok(&init.token, ft_newtoken(END, ft_strdup("newline"), 0, 0));
+		return (ft_putstr_fd("Syntax : Need a parantes\n", 2), NULL);
+	add_token_back(&init.token, newtoken(END, ft_strdup("newline"), 0, 0));
     return (init.token);
 }

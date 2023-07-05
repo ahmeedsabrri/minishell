@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/05 20:21:50 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/05 21:06:00 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_token
     bool hd;
     bool  expand;
     
-    t_flgs *type;
+    t_flgs type;
     
     struct s_token *next;
     struct s_token *bottom;

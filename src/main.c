@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/06/04 17:45:51 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/05 21:03:17 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int main(int ac, char **av, char **env)
     char *line;
     (void)ac;
     (void)av;
+    (void)env;
     // t_env *envrm;
     // envrm = dup_env(env);
     t_token *token;
@@ -32,7 +33,7 @@ int main(int ac, char **av, char **env)
         token = strtoken(line);
         while(token)
         {
-            // printf("%s",token)
+            printf("%s",token->token);
             token = token->next;
         }
         if(*line)
