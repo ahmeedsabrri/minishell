@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/02 02:13:21 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/05 20:59:31 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,39 @@
 
 
 
-// utils 
-t_token	*ft_lstlst(t_token *node)
+// lst 
+t_token	*ft_lstlst(t_token *lst)
 {
-	if (!node)
-		return (NULL);
-	while (node)
+	while (lst)
 	{
-		if (node->next == NULL)
-			return (node);
-		node = node ->next;
+		if (lst->next == NULL)
+			break ;
+		lst = lst->next;
 	}
-	return (node);
+	return (lst);
 }
 
 void	add_token_back(t_token **lst, t_token *new)
 {
-	t_token	*ptr;
-
-	ptr = *lst;
+	
 	if (*lst == NULL)
-		*lst = new;
-	else
 	{
-		ptr = ft_lstlst(*(lst));
-		ptr->next = new;
+		*lst = new;
+		return ;
 	}
+	new->prev = ft_lstlst(*lst);
+	ft_lstlst(*lst)->next = new;
+	new->next = NULL;
 }
 
-t_token *newtoken(char *tok,int hdoc,int expnd)
+t_token *newtoken(t_flgs type,char *tok,int hdoc,int expnd)
 {
     t_token *node;
 
-    node = malloc(sizeof(t_token));
+    node = ft_malloc(sizeof(t_token), 1);
     node->token = tok;
+    node->type = type;
+    node->prev = NULL;
     node->next = NULL;
     node->bottom = NULL;
     node->hd = false;
@@ -58,17 +57,45 @@ t_token *newtoken(char *tok,int hdoc,int expnd)
         node->expand = true;
     return (node);
 }
-char *get_word(char *str, int index ,char c)
+// --------------------utils--------------------
+char *get_word(char *str, int *index)
 {
     int j;
-
-    j = index;
-    while (str[j] && !ft_strchr("\"\'<>()\t", str[j]))
-        j++;
-    return (ft_substr(str,index,j - 1));
+    int i;
+    
+    i = *index;
+    j = i;
+    while (str[i] && !ft_strchr("\"\'<>() \t", str[i]))
+        i++;
+    return (*index = i - 1,ft_substr(str,j,i - j));
 }
 
+char *get_qoute(char *str,int *index,char car)
+{
+    int	i;
+	int	j;
 
+	i = *index;
+	j = i;
+	while (str[i] && str[i] != car)
+		i++;
+	if (!str[i])
+		return (*index = i - 1, ft_substr(str, j, i - j));
+	return (*index = i - 1, ft_substr(str, j, i - j));
+}
+int which_flag(char c ,int flg)
+{
+    char	*str;
+	int		i;
+
+	i = -1;
+	str = "\"\'|<>()";
+	while (str[++i])
+		if (str[i] == c)
+			break ;
+	(flg) && (i += 7);
+	return (i + 1);
+}
 void ft_initialize(t_init *init)
 {
     init->i = -1;
@@ -108,19 +135,46 @@ void lexer_2(t_init *t, char *str)
         t->cp += 1;
     if (!onlyspace(t->i,str) && str[t->i] != '\'' && str[t->i] != '\"' 
         && str[t->i] != ' ' && str[t->i] != '\t')
-        add_token_back(&t->token,newtoken())
+        add_token_back(&t->token,newtoken(which_flag(str[t->i],t->unkown),ft_substr(str, t->i,
+					t->unkown + 1), 0, 0));
+    if (str[t->i] == ' ' || str[t->i] == '\t')
+	{
+		while ((str[t->i] == ' ' || str[t->i] == '\t') && str[t->i])
+			t->i++;
+		t->i--;
+	}
+	t->i += t->unkown;
 }
-
-void lexer_1(t_init *in, char *tok)
+void lexer_3(t_init *in, char *tok)
 {
     if (in->space)
     {   
-        add_token_back(newtoken(),)
+        add_token_back(&in->token,newtoken(WORD, get_word(tok, &in->i),1,1));
         in->space = false;
     }
     else if(!in->space)
     {
-        
+        in->bottom = ft_lstlst(in->token);
+		while (in->bottom->bottom)
+			in->bottom = in->bottom->bottom;
+        in->bottom->bottom = newtoken(WORD, get_word(tok, &in->i), 1, 1);
+    }
+}
+void lexer_1(t_init *in, char *tok)
+{
+    if (in->space)
+    {   
+        add_token_back(&in->token,newtoken(WORD, get_qoute(tok, &in->i, tok[in->i - 1]),
+				(in->double_quote == true), 0));
+        in->space = false;
+    }
+    else if(!in->space)
+    {
+        in->bottom = ft_lstlst(in->token);
+		while (in->bottom->bottom)
+			in->bottom = in->bottom->bottom;
+        in->bottom->bottom = newtoken(WORD, get_qoute(tok, &in->i, tok[in->i - 1]),
+				(in->double_quote == true), 0);
     }
 }
 
@@ -129,18 +183,22 @@ void lexer_1(t_init *in, char *tok)
 t_token *strtoken(char *line)
 {
     t_token *token;
-    t_init *init;
+    t_init init;
 
     tf_initialize(&init);
-    while (line[++(init->i)])
+    while (line[++(init.i)])
     {
-        if ((init->double_quote && line[init->i] =='\"') || (init->singl_quote && line[init->i] == '\''))
+        if ((init.double_quote && line[init.i] =='\"') || (init.singl_quote && line[init.i] == '\''))
             lexer_1(&init,line);
-        else if (ft_strchr("\"\'<>()\t", line[init->i]))
+        else if (ft_strchr("\"\'<>()\t", line[init.i]))
             lexer_2(&init,line);
-        else if (!ft_strchr("\"\'<>() \t", line[init->i]) && (!init->double_quote|| !init->singl_quote))
-            
+        else if (!ft_strchr("\"\'<>() \t", line[init.i]) && (!init.double_quote|| !init.singl_quote))
+            lexer_3(&init,line);
     }
-    
-    return (NULL);
+    if ((init.singl_quote || init.double_quote) || (init.op != init.cp))
+		return (ft_putstr_fd("Syntax : Quote Unfound\n", 2), NULL);
+	if (init.op != init.cp)
+		return (t_putstr_fd("Syntax : Need a parantes\n", 2), NULL);
+	addtok(&init.token, ft_newtoken(END, ft_strdup("newline"), 0, 0));
+    return (init.token);
 }

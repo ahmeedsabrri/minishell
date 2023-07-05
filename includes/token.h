@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
-/*   Updated: 2023/06/29 04:14:29 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/05 20:21:50 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,41 @@
 
 #include "./minishell.h"
 #include "./ft_malloc.h"
+
+#include <stdbool.h>
+typedef enum s_flgs
+{
+	WORD = 0,
+	DQ = 1,
+	SQ = 2,
+	PIPE = 3,
+	RIN = 4,
+	ROUT = 5,
+	OPAR = 6,
+	CPAR = 7,
+	SPACE = 8,
+	HEREDOC = 11,
+	APPEND = 12,
+	SUBSHELL,
+	REDIR,
+	SIGHER,
+	END,
+}					t_flgs;
+
 typedef struct s_token
 {
     char *token;
-    char *type;
+    
     bool hd;
     bool  expand;
+    
+    t_flgs *type;
+    
     struct s_token *next;
     struct s_token *bottom;
-}   t_token;
+    struct s_token *prev;
+
+}               t_token;
 
 typedef struct s_init
 {
@@ -38,8 +64,8 @@ typedef struct s_init
     int op;
 
     
-    typedef struct s_token *token;
-    typedef struct s_token *bottom;
+    struct s_token *token;
+    struct s_token *bottom;
     
 }               t_init;
 #endif
