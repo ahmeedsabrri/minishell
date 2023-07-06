@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/05 21:11:28 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/06 01:27:13 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	add_var_back(t_env **lst, t_env *new);
 t_env	*ft_lstlast(t_env *node);
 
 t_token *strtoken(char *str);
-t_token *newtoken(t_flgs type,char *tok,int hdoc,int expnd);
+// t_token *newtoken(t_flgs type,char *tok,int hdoc,int expnd);
+t_token *newtoken(t_flgs type, char *tok, bool hdoc, bool expnd);
 void	add_token_back(t_token **lst, t_token *new);
 t_token	*ft_lstlst(t_token *lst);
 #endif
