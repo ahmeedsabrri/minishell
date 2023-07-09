@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/06 01:26:06 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/09 22:49:13 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_token {
     bool expand;
 } t_token;
 
+
 // typedef enum s_flgs
 // {
 // 	WORD = 0,
@@ -80,6 +81,7 @@ typedef struct s_token {
 //     struct s_token *prev;
 
 // }               t_token;
+// Structure for initialization variables
 typedef struct {
     int i;
     t_token *token;

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/05 21:31:08 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/06 02:54:12 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ int main(int ac, char **av, char **env)
         //     envrm = envrm->next;
         // }
         line = readline("minishell-$ ");
+        if (line == NULL)
+            break;
         token = strtoken(line);
         while(token)
         {
-            printf("%s",token->token);
+            printf("%s\n",token->token);
             token = token->next;
         }
         if(*line)

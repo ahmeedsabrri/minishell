@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/06 01:27:13 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/09 22:41:53 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft-42/libft.h"
 # include "ft_malloc.h"
 # include "token.h"
+# include "parser.h"
 # include <stdio.h>
 # include <stdbool.h>
 # include <readline/readline.h>
@@ -28,26 +29,8 @@ typedef struct s_env
     struct s_env *next;
 }t_env;
 
-typedef struct  s_tree
-{
-    int type;
-}        t_tree;
 
-typedef struct s_pipeline
-{
-    int type;
-    t_tree *left;
-    t_tree *right;
 
-    
-}t_pipeline;
-
-typedef struct s_cmdline
-{
-    int type;
-    t_token *cmd;
-    t_token *redir;
-}t_cmdline;
 
 t_env *dup_env(char **env);
 t_env *newvar(char **variable);
@@ -57,7 +40,7 @@ t_env	*ft_lstlast(t_env *node);
 
 t_token *strtoken(char *str);
 // t_token *newtoken(t_flgs type,char *tok,int hdoc,int expnd);
-t_token *newtoken(t_flgs type, char *tok, bool hdoc, bool expnd);
-void	add_token_back(t_token **lst, t_token *new);
+t_token *newtoken(t_flgs type, const char *tok, bool hdoc, bool expnd);
+void add_token_back(t_token **lst, t_token *new);
 t_token	*ft_lstlst(t_token *lst);
 #endif

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 00:55:49 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/05 21:14:49 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/06 02:29:43 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include "../includes/ft_malloc.h"
+void	fd_printf(int fd, const char *fmt, ...);
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
 int		ft_isalnum(int c);
