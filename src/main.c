@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/06 02:54:12 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/12 16:19:19 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,24 @@ int main(int ac, char **av, char **env)
         token = strtoken(line);
         while(token)
         {
-            printf("%s\n",token->token);
+            printf("%s ",token->token);
+            switch (token->type)
+            {
+            case WORD:
+                printf("WORD\n");
+                break;
+            case PIPE:
+                printf("PIPE\n");
+                break;
+            case REDIRECT_IN:
+                printf("REDIRECT_IN\n");
+                break;
+            case REDIRECT_OUT:
+                printf("REDIRECT_OUT");
+                break;
+            default:
+                break;
+            }
             token = token->next;
         }
         if(*line)

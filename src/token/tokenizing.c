@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/09 23:01:19 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/13 00:54:54 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,7 +384,7 @@ t_token *newtoken(t_flgs type, const char *tok, bool hdoc, bool expnd) {
         perror("Memory allocation failed");
         exit(EXIT_FAILURE);
     }
-    node->token = strdup(tok);
+    node->token = ft_strdup(tok);
     node->type = type;
     node->prev = NULL;
     node->next = NULL;
@@ -398,7 +398,7 @@ t_token *newtoken(t_flgs type, const char *tok, bool hdoc, bool expnd) {
 char *get_word(const char *str, int *index) {
     int j = *index;
     int i = j;
-    while (str[i] && !strchr("\"\'<>() \t", str[i])) {
+    while (str[i] && !strchr("\"\'<>()\t", str[i])) {
         i++;
     }
     *index = i - 1;
@@ -444,17 +444,21 @@ t_token *strtoken(char *line) {
     initialize(&init);
 
     while (line[++init.i]) {
-        if ((init.double_quote && line[init.i] == '\"') || (init.single_quote && line[init.i] == '\'')) {
+        if ((init.double_quote && line[init.i] == '\"') || (init.single_quote && line[init.i] == '\'')) 
+        {
             init.double_quote = !init.double_quote;
             init.single_quote = !init.single_quote;
-        } else if (strchr("\"\'<>()\t", line[init.i])) {
+        }
+        else if (ft_strchr("\"\'<>()\t", line[init.i])) 
+        {
             init.space = true;
-        } else if (!strchr("\"\'<>() \t", line[init.i]) && (!init.double_quote || !init.single_quote)) {
+        } 
+        else if (!ft_strchr("\"\'<>() \t", line[init.i]) && (!init.double_quote || !init.single_quote)) 
+        {
             init.space = true;
             char *word = get_word(line, &(init.i));
-            add_token_back(&(init.token), newtoken(WORD, word, 0, 0));
+            add_token_back(&(init.token), newtoken(which_flag(line[init.i],0), word, 0, 0));
         }
-
         if (line[init.i] == ' ' || line[init.i] == '\t') {
             while ((line[init.i] == ' ' || line[init.i] == '\t') && line[init.i]) {
                 init.i++;
@@ -462,7 +466,6 @@ t_token *strtoken(char *line) {
             init.i--;
         }
     }
-
     if ((init.single_quote && init.double_quote) || (init.token == NULL)) {
         fprintf(stderr, "Syntax Error: Invalid quoting\n");
         return NULL;
@@ -473,4 +476,5 @@ t_token *strtoken(char *line) {
     return init.token;
 }
 
-// 
+// TODOS : ARGUMENT AFETR SPACE IT GOT LINKED WITH THE BEFORE 
+// TODOS : ARGUMENT "''"  OR '""' ERORR

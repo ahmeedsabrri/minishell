@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/09 22:49:13 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/11 11:52:35 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef enum {
     REDIRECT_OUT,
     LEFT_PARENTHESIS,
     RIGHT_PARENTHESIS,
+    SIGHER,
     END
 } t_flgs;
 
