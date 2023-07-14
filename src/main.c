@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/12 16:19:19 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/14 08:35:54 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,21 @@ int main(int ac, char **av, char **env)
     t_token *token;
     while(1)
     {
-        // while(envrm)
-        // {
-        //     printf("%s",envrm->var);
-        //     printf("=");
-        //     printf("%s\n",envrm->val);
-        //     envrm = envrm->next;
-        // }
+        
         line = readline("minishell-$ ");
         if (line == NULL)
             break;
         token = strtoken(line);
+        // if (strcmp(token->token,"env") == 0)
+        // {
+        //     while(envrm)
+        //     {
+        //         printf("%s",envrm->var);
+        //         printf("=");
+        //         printf("%s\n",envrm->val);
+        //         envrm = envrm->next;
+        //     }
+        // }
         while(token)
         {
             printf("%s ",token->token);
@@ -49,6 +53,9 @@ int main(int ac, char **av, char **env)
                 break;
             case REDIRECT_OUT:
                 printf("REDIRECT_OUT");
+                break;
+            case EXPANDER:
+                printf("EXPANDER\n");
                 break;
             default:
                 break;
