@@ -19,48 +19,18 @@ int main(int ac, char **av, char **env)
     (void)env;
     // t_env *envrm;
     // envrm = dup_env(env);
-    t_token *token;
+    t_cmd *cmd;
     while(1)
     {
         
         line = readline("minishell-$ ");
         if (line == NULL)
             break;
-        token = strtoken(line);
-        // if (strcmp(token->token,"env") == 0)
-        // {
-        //     while(envrm)
-        //     {
-        //         printf("%s",envrm->var);
-        //         printf("=");
-        //         printf("%s\n",envrm->val);
-        //         envrm = envrm->next;
-        //     }
-        // }
-        while(token)
+        cmd = token(line);
+        while (cmd)
         {
-            printf("%s ",token->token);
-            switch (token->type)
-            {
-            case WORD:
-                printf("WORD\n");
-                break;
-            case PIPE:
-                printf("PIPE\n");
-                break;
-            case REDIRECT_IN:
-                printf("REDIRECT_IN\n");
-                break;
-            case REDIRECT_OUT:
-                printf("REDIRECT_OUT");
-                break;
-            case EXPANDER:
-                printf("EXPANDER\n");
-                break;
-            default:
-                break;
-            }
-            token = token->next;
+            printf("%s",cmd->cmd);
+            cmd = cmd->next;
         }
         if(*line)
             add_history(line);

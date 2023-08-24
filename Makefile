@@ -12,13 +12,13 @@
 
 NAME = minishell
 
-SRC = src/env/env.c src/env/env_utils.c src/main.c src/token/tokenizing.c gc/ft_malloc.c gc/utils_malloc.c
+SRC = src/env/env.c src/env/env_utils.c src/main.c src/lexer/lexer.c gc/ft_malloc.c gc/utils_malloc.c
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
 RM = rm -rf
-HEADER = includes/minishell.h includes/ft_malloc.h includes/token.h
+HEADER = includes/minishell.h includes/ft_malloc.h includes/lexer.h
 
 OBJS = $(SRC:.c=.o)
 
