@@ -6,12 +6,12 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/14 08:22:05 by asabri           ###   ########.fr       */
+/*   Updated: 2023/08/25 18:31:11 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-#define LEXER_H
+#ifndef TOKEN_H
+#define TOKEN_H
 
 #include "./minishell.h"
 #include "./ft_malloc.h"
@@ -23,29 +23,73 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Token types
-typedef enum {
-    WORD,
-    DOUBLE_QUOTE,
-    SINGLE_QUOTE,
-    REDIRECT_IN,
-    REDIRECT_OUT,
-    LEFT_PARENTHESIS,
-    RIGHT_PARENTHESIS,
-    SIGHER,
-    EXPANDER,
-    END
-} t_flag;
+// // Token types
+// typedef enum {
+//     WORD,
+//     DOUBLE_QUOTE,
+//     SINGLE_QUOTE,
+//     PIPE,
+//     REDIRECT_IN,
+//     REDIRECT_OUT,
+//     LEFT_PARENTHESIS,
+//     RIGHT_PARENTHESIS,
+//     SIGHER,
+//     EXPANDER,
+//     END
+// } t_flgs;
+
+
+
+typedef enum s_flgs
+{
+	WORD = 0,
+	DQ = 1,
+	SQ = 2,
+	PIPE = 3,
+	RIN = 4,
+	ROUT = 5,
+	OPAR = 6,
+	CPAR = 7,
+	SPACE = 8,
+	HEREDOC = 11,
+	APPEND = 12,
+	SUBSHELL,
+	REDIR,
+	SIGHER,
+	END,
+}					t_flgs;
 
 typedef struct s_token
 {
     char *token;
-    t_flag flag;
-}t_token;
+    
+    bool hd;
+    bool  expand;
+    
+    t_flgs type;
+    
+    struct s_token *next;
+    struct s_token *bottom;
+    struct s_token *prev;
 
-typedef struct s_cmd{
-    char *cmd;
+}               t_token;
+// Structure for initialization variables
+typedef struct s_init
+{
+    int i;
+    int double_quote;
+    int singl_quote;
+    int space;
+    
+
+    int unkown;
+    int cp;
+    int op;
+
+    
     struct s_token *token;
-    struct s_cmd *next;
-}t_cmd;
+    struct s_token *bottom;
+    
+}               t_init;
+
 #endif
