@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/06 02:40:22 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/26 05:06:52 by asabri           ###   ########.fr       */
+/*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
+/*   Updated: 2023/08/28 14:45:17 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef LEXER_H
+#define LEXER_H
+
 #include "./minishell.h"
 #include "./ft_malloc.h"
 
@@ -22,34 +23,31 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct  s_tree
+typedef enum e_token_type{
+	NONE,
+	WORD,
+	SEMI,
+	GREAT,
+	LESS,
+	DOUBLE_GREAT,
+	PIPE,
+}			t_token_type;
+typedef struct s_init
 {
-    int type;
-}        t_tree;
-
-typedef struct s_pipeline
+	int dq;
+	int sq;
+	int h;
+	int op;
+	int cp;
+	int space;
+}t_init;
+typedef struct s_token
 {
-    int type;
-    t_tree *left;
-    t_tree *right;
+	t_token_type	type;
+	char			*value;
+	struct s_token	*next;
+	struct s_token	*down;
+}				t_token;
 
-    
-}t_pipeline;
-// typedef struct s_redir
-// {
-// 	int		type;
-// 	int		typeredir;
-// 	int		fd_in;
-// 	int		flags;
-// 	char	*arg;
-// 	t_token	*tok;
-// 	t_tree	*trdr;
-// }			t_redir;
-// typedef struct s_cmdline
-// {
-//     int type;
-//     t_token *cmd;
-//     t_token *redir;
-// }t_cmdline;
-
+t_token	*ft_lexer(char *line);
 #endif

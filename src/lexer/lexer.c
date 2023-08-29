@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/26 05:08:27 by asabri           ###   ########.fr       */
+/*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
+/*   Updated: 2023/08/28 14:51:24 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-int main(int ac, char **av, char **env)
+#include "../../includes/minishell.h"
+void ft_intia(t_init *in)
 {
-    char *line;
-    (void)ac;
-    (void)av;
-    (void)env;
-    // t_env *envrm;
-    // envrm = dup_env(env);
+    in->dq = 0;
+    in->sq = 0;
+    in->space = 0;
+    in->cp = 0;
+    in->op = 0;
+    in->h = 0;
+}
+
+t_token	*ft_lexer(char *line)
+{
+    int i;
     t_token *token;
-    token = NULL;
-    while(1)
+    t_init in;
+
+    i = -1;
+    ft_intia(&in);
+    while(line[++i])
     {
-        
-        line = readline("minishell-$ ");
-        if (line == NULL)
-            break;
-        token = ft_lexer(line);
-        if(*line)
-            add_history(line);
+        if(in.dq && line[i] == '\"' || in.sq && line[i] == '\'')
     }
-    return 0;
 }
