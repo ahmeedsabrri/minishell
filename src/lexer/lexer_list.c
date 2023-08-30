@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:38:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/29 11:39:56 by asabri           ###   ########.fr       */
+/*   Updated: 2023/08/31 00:24:22 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char *get_word(char *str, int *index)
 
     i = *index;
     j = i;
-    while (str[i] && !ft_strchr("\"\'|<>() \t", str[i]))
+    while (str[i] && !ft_strchr("\"\'|<> \t", str[i]))
 		i++;
     *index = i - 1;
     return (ft_substr(str, j, i - j));
@@ -41,6 +41,8 @@ t_token *ft_lastlst(t_token *node)
 		return (NULL);
 	while (node->next)
 	{
+        if (node->next == NULL)
+			return (node);
 		node = node->next;
 	}
 	return (node);
@@ -58,12 +60,13 @@ void add_back(t_token **lst,t_token *new)
     ptr = ft_lastlst(*(lst));
     ptr->next = new;
 }
-t_token *newtoken(char *token)
+t_token *newtoken(t_token_type flag,char *token)
 {
     t_token *lst;
     
     lst = ft_malloc(sizeof(t_token),1);
     lst->value = token;
+    lst->type = flag;
     lst->next = NULL;
     return (lst);
 }

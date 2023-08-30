@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/29 11:27:46 by asabri           ###   ########.fr       */
+/*   Updated: 2023/08/31 00:31:28 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,21 @@ int main(int ac, char **av, char **env)
         token = ft_lexer(line);
         while(token)
         {
-            printf("%s\n",token->value);
+            printf("%s\t",token->value);
+            if (token->type == WORD)
+                printf("WORD");
+            if (token->type == PIPE)
+                printf("PIPE");
+            if (token->type == RIN)
+                printf("RIN");
+            if (token->type == ROUT)
+                printf("ROUT");
+            if (token->type == APPEND)
+                printf("APPEND");
+            if (token->type == HEREDOC)
+                printf("HEREDOC");
             token = token->next;
+            printf("\n");
         }
         if(*line)
             add_history(line);
