@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 00:23:28 by asabri           ###   ########.fr       */
+/*   Updated: 2023/08/31 02:33:20 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,4 @@ typedef struct s_token
 	struct s_token	*next;
 }				t_token;
 
-t_token	*ft_lexer(char *line);
-t_token *ft_lastlst(t_token *node);
-void add_back(t_token **lst,t_token *new);
-t_token *newtoken(t_token_type flag,char *token);
-char *get_word(char *str, int *index);
-char *get_q(char *str,char c,int *index);
 #endif

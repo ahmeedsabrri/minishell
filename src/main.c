@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 00:31:28 by asabri           ###   ########.fr       */
+/*   Updated: 2023/08/31 02:35:31 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int main(int ac, char **av, char **env)
 {
-    char *line;
     (void)ac;
     (void)av;
-    (void)env;
-    // t_env *envrm;
-    // envrm = dup_env(env);
+    char *line;
+    t_env *envrm;
     t_token *token;
+    
+    envrm = dup_env(env);
     token = NULL;
     while(1)
     {
@@ -28,7 +28,7 @@ int main(int ac, char **av, char **env)
         line = readline("minishell-$ ");
         if (line == NULL)
             break;
-        token = ft_lexer(line);
+        token = ft_lexer(line,envrm);
         while(token)
         {
             printf("%s\t",token->value);

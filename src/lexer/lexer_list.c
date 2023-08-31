@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:38:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 00:24:22 by asabri           ###   ########.fr       */
+/*   Updated: 2023/08/31 03:50:57 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char *get_word(char *str, int *index)
     *index = i - 1;
     return (ft_substr(str, j, i - j));
 }
-char *get_q(char *str,char c,int *index)
+char *get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env)// bool expand // (dq == true) ila kan bool expand == 1 ghatexpandi ila kan 0 rak nta f single quote
 {
     int i;
     int j;
@@ -33,7 +33,9 @@ char *get_q(char *str,char c,int *index)
     while (str[i] && str[i] != c)
 		i++;
     *index = i - 1;
-    return (ft_substr(str, j, i - j));
+    if (expnd && !herdoc)
+        return (ft_expand(ft_substr(str, j, i - j),env));
+    return (ft_substr(str, j, i - j));  //return (expand(ft_substr(str, j, i - j))); ila kan false atreturni  return (ft_substr(str, j, i - j));
 }
 t_token *ft_lastlst(t_token *node)
 {

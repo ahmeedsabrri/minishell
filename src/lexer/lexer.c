@@ -6,11 +6,12 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 00:36:34 by asabri           ###   ########.fr       */
+/*   Updated: 2023/08/31 04:00:02 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
 t_token_type which_flag(char c, bool bol)
 {
     if (c == '|')
@@ -19,9 +20,9 @@ t_token_type which_flag(char c, bool bol)
         return (APPEND);
     else if (bol && c == '<')
         return (HEREDOC);
-    else if (c == '<')
-        return (ROUT);
     else if (c == '>')
+        return (ROUT);
+    else if (c == '<')
         return (RIN);
     else
         return (WORD);
@@ -32,10 +33,8 @@ void lexer3(t_init *in,char *line)
     t_token *ptr; 
     if (!in->space)
     {
-        add_back(&in->token,newtoken(which_flag(line[in->i],0),get_word(line,&in->i)));
+        add_back(&in->token,newtoken(WORD,get_word(line,&in->i)));
         in->space = 1;
-        //printf("[%s]\n",in->token->value);
-        // exit(0);
     }
     else
     {
@@ -45,13 +44,13 @@ void lexer3(t_init *in,char *line)
        ptr->value = ft_strjoin(ptr->value,get_word(line,&in->i));
     }
 }
-void lexer2(t_init *in,char *line)
+void lexer2(t_init *in,char *line,t_env *env)
 {
     t_token *ptr;
     
     if (!in->space)
     {
-        add_back(&in->token,newtoken(which_flag(line[in->i],0),get_q(line,line[in->i - 1],&in->i)));
+        add_back(&in->token,newtoken(WORD,get_q(line,line[in->i - 1],&in->i,(in->dq == 1),in->h,env)));
         in->space = 1;
     }
     else
@@ -59,27 +58,36 @@ void lexer2(t_init *in,char *line)
         ptr = in->token;
         while (ptr->next)
             ptr = ptr->next;
-        ptr->value = ft_strjoin(ptr->value,get_q(line,line[in->i - 1],&in->i));
+        ptr->value = ft_strjoin(ptr->value,get_q(line,line[in->i - 1],&in->i,(in->dq == 1),in->h,env));
     }
+    in->h = 0;
 }
 void lexer1(t_init *in,char *line)
 {
+
      if (line[in->i] == '\"')
         in->dq = !in->dq;
     else if (line[in->i] == '\'')
         in->sq = !in->sq;
-    else if (line[in->i] == '<' || line[in->i] == '>')
+    if (line[in->i] == '<' || line[in->i] == '>')
     {
+        in->h = 0;
         if(line[in->i] == line[in->i + 1])
         {
-            add_back(&in->token,newtoken(which_flag(line[in->i],1),ft_substr(line,in->i, 2)));
+            add_back(&in->token,newtoken(which_flag(line[in->i],1),NULL));
             in->i++;
+            
+            if (which_flag(line[in->i], 1) == HEREDOC)
+                in->h = 1;
         }
         else 
-            add_back(&in->token,newtoken(which_flag(line[in->i],0),ft_substr(line,in->i, 1)));
+            add_back(&in->token,newtoken(which_flag(line[in->i],0),NULL));
     }
     else if (line[in->i] == '|')
-        add_back(&in->token,newtoken(which_flag(line[in->i],0),NULL));// wa7ed nhar ghadir NULL w lflag aykun pipe no need n3amer value b "|"
+    {   
+        add_back(&in->token,newtoken(which_flag(line[in->i],0),NULL));
+        in->h = 0;
+    }
     (line[in->i] != '\"' && line[in->i] != '\'') && (in->space = 0);
 }
 
@@ -92,7 +100,7 @@ void ft_intia(t_init *in)
     in->space = 0;
 }
 
-t_token	*ft_lexer(char *line)
+t_token	*ft_lexer(char *line,t_env *env)
 {
     int i;
     t_init in;
@@ -101,14 +109,19 @@ t_token	*ft_lexer(char *line)
     ft_intia(&in);
     while(line[++in.i])
     {
-        if(((in.dq && line[in.i] != '\"') || (in.sq && line[in.i] != '\'')) && line[in.i] != '|')
-            lexer2(&in,line);
+        if((line[in.i] == '\"' && line[in.i] == line[in.i + 1]) || (line[in.i] == '\'' && line[in.i] == line[in.i + 1]))
+        {    
+            add_back(&in.token, newtoken(WORD, NULL));
+            in.i++;
+        }
+        else if(((in.dq && line[in.i] != '\"') || (in.sq && line[in.i] != '\'')))
+            lexer2(&in,line,env);
         else if (ft_strchr("<>\'\"| \t",line[in.i]))
             lexer1(&in,line);
         else if (!ft_strchr("<>\'\"| \t",line[in.i]))
             lexer3(&in,line);
     }
     if (in.dq || in.sq)
-        return(fprintf(stderr, "Syntax Error: Unclosed quote\n"),NULL);
+        return(fd_printf(2, "Syntax Error: Unclosed quote\n"),NULL);
     return (in.token);
 }
