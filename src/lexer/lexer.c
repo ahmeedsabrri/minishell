@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 04:00:02 by asabri           ###   ########.fr       */
+/*   Updated: 2023/08/31 04:34:16 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ t_token_type which_flag(char c, bool bol)
         return (WORD);
 }
 
-void lexer3(t_init *in,char *line)
+void lexer3(t_init *in,char *line,t_env *env)
 {
     t_token *ptr; 
     if (!in->space)
     {
-        add_back(&in->token,newtoken(WORD,get_word(line,&in->i)));
+        add_back(&in->token,newtoken(WORD,get_word(line,&in->i,env)));
         in->space = 1;
     }
     else
@@ -41,7 +41,7 @@ void lexer3(t_init *in,char *line)
        ptr = in->token;
         while (ptr->next)
             ptr = ptr->next;
-       ptr->value = ft_strjoin(ptr->value,get_word(line,&in->i));
+       ptr->value = ft_strjoin(ptr->value,get_word(line,&in->i,env));
     }
 }
 void lexer2(t_init *in,char *line,t_env *env)
@@ -119,7 +119,7 @@ t_token	*ft_lexer(char *line,t_env *env)
         else if (ft_strchr("<>\'\"| \t",line[in.i]))
             lexer1(&in,line);
         else if (!ft_strchr("<>\'\"| \t",line[in.i]))
-            lexer3(&in,line);
+            lexer3(&in,line,env);
     }
     if (in.dq || in.sq)
         return(fd_printf(2, "Syntax Error: Unclosed quote\n"),NULL);

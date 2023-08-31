@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 03:50:08 by asabri           ###   ########.fr       */
+/*   Updated: 2023/08/31 04:34:46 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_token	*ft_lexer(char *line,t_env *env);
 t_token *ft_lastlst(t_token *node);
 void add_back(t_token **lst,t_token *new);
 t_token *newtoken(t_token_type flag,char *token);
-char *get_word(char *str, int *index);
+char *get_word(char *str, int *index,t_env *env);
 char *get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env);
 char *ft_expand(char *str,t_env *env);
 #endif

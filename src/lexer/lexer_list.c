@@ -6,12 +6,12 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:38:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 03:50:57 by asabri           ###   ########.fr       */
+/*   Updated: 2023/08/31 04:34:33 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-char *get_word(char *str, int *index)
+char *get_word(char *str, int *index,t_env *env)
 {
     int i;
     int j;
@@ -21,7 +21,7 @@ char *get_word(char *str, int *index)
     while (str[i] && !ft_strchr("\"\'|<> \t", str[i]))
 		i++;
     *index = i - 1;
-    return (ft_substr(str, j, i - j));
+    return (ft_expand(ft_substr(str, j, i - j),env));
 }
 char *get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env)// bool expand // (dq == true) ila kan bool expand == 1 ghatexpandi ila kan 0 rak nta f single quote
 {
