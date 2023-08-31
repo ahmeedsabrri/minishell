@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 04:34:46 by asabri           ###   ########.fr       */
+/*   Updated: 2023/08/31 04:40:45 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,5 @@ t_token *newtoken(t_token_type flag,char *token);
 char *get_word(char *str, int *index,t_env *env);
 char *get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env);
 char *ft_expand(char *str,t_env *env);
+t_token_type which_flag(char c, bool bol);
 #endif

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 02:33:20 by asabri           ###   ########.fr       */
+/*   Updated: 2023/08/31 05:53:14 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ typedef enum e_token_type{
 	ROUT,
 	END,
 }			t_token_type;
+
+typedef struct s_token
+{
+	t_token_type	type;
+	char			*value;
+	struct s_token	*next;
+}				t_token;
+
 typedef struct s_init
 {
 	int dq;
@@ -44,11 +52,5 @@ typedef struct s_init
 	int i;
 	struct s_token	*token;
 }t_init;
-typedef struct s_token
-{
-	t_token_type	type;
-	char			*value;
-	struct s_token	*next;
-}				t_token;
 
 #endif
