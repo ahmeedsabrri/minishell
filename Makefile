@@ -6,13 +6,17 @@
 #    By: asabri <asabri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 11:03:36 by asabri            #+#    #+#              #
-#    Updated: 2023/08/31 04:41:24 by asabri           ###   ########.fr        #
+#    Updated: 2023/09/01 01:29:00 by asabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = src/env/env.c src/env/env_utils.c src/main.c src/lexer/lexer.c src/lexer/lexer_list.c src/lexer/expand.c src/lexer/lexer_utils.c gc/ft_malloc.c gc/utils_malloc.c
+SRC = src/env/env.c src/env/env_utils.c src/main.c src/lexer/lexer.c \
+	src/lexer/lexer_list.c src/lexer/expand.c src/lexer/lexer_utils.c \
+	gc/ft_malloc.c gc/utils_malloc.c src/parser/parser.c \
+	src/parser/parser_list.c src/parser/parser_utils.c
+
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g

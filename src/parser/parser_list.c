@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   parser_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/31 05:44:08 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 05:49:16 by asabri           ###   ########.fr       */
+/*   Created: 2023/09/01 00:45:18 by asabri            #+#    #+#             */
+/*   Updated: 2023/09/01 01:05:50 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../includes/minishell.h"
 
-t_tree *pipenode(t_tree *left, t_tree *right)
+t_redir *ft_lastlst_redir(t_redir *node)
 {
-    t_pipeline *n;
-
-    n = malloc(sizeof(t_pipeline));
-    return(n->left = left, n->right = right, n->type = PIPE, (t_tree *)n);
+	if (!node)
+		return (NULL);
+	while (node->next)
+	{
+        if (node->next == NULL)
+			return (node);
+		node = node->next;
+	}
+	return (node);
 }
-t_tree *cmdnode()
+void add_back_redir(t_redir **lst,t_redir *new)
 {
-    t_simplecmd *n;
-    n = malloc(sizeof(t_simplecmd));
-    return(n->redir_list = NULL, n->simplecmd = NULL, n->type = WORD, (t_tree *)n);
+    t_redir *ptr;
+
+    ptr = (*lst);
+    if (*lst == NULL)
+    {
+        *lst = new;
+        return;
+    }
+    ptr = ft_lastlst_redir(*(lst));
+    ptr->next = new;
 }

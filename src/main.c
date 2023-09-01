@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 02:35:31 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/01 01:48:23 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int main(int ac, char **av, char **env)
     char *line;
     t_env *envrm;
     t_token *token;
+    t_tree *tree;
     
     envrm = dup_env(env);
     token = NULL;
@@ -29,24 +30,8 @@ int main(int ac, char **av, char **env)
         if (line == NULL)
             break;
         token = ft_lexer(line,envrm);
-        while(token)
-        {
-            printf("%s\t",token->value);
-            if (token->type == WORD)
-                printf("WORD");
-            if (token->type == PIPE)
-                printf("PIPE");
-            if (token->type == RIN)
-                printf("RIN");
-            if (token->type == ROUT)
-                printf("ROUT");
-            if (token->type == APPEND)
-                printf("APPEND");
-            if (token->type == HEREDOC)
-                printf("HEREDOC");
-            token = token->next;
-            printf("\n");
-        }
+        tree = parser(token);
+        
         if(*line)
             add_history(line);
     }
