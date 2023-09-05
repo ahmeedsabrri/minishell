@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/22 00:35:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/01 07:20:53 by asabri           ###   ########.fr       */
+/*   Created: 2023/07/08 13:33:11 by yelwadou          #+#    #+#             */
+/*   Updated: 2023/09/05 03:45:05 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "../../includes/minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void _env(t_env *env)
 {
-	if(!s)
-		return(write(fd, "(null)", 6), (void)0);
-	while (*s)
-	{
-		write(fd, s, 1);
-		s++;
-	}
+    if(!env)
+        return ;
+    while (env)
+    {
+        printf("%s=%s\n", env->var, env->val);
+        env = env->next;
+    }
+    _status(0);
+    //open("ldbjf", O_APPEND)
 }
+//  TODO:need to make sure if it should be printed in stdout_fileno

@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/22 00:35:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/01 07:20:53 by asabri           ###   ########.fr       */
+/*   Created: 2023/09/01 04:22:15 by asabri            #+#    #+#             */
+/*   Updated: 2023/09/05 00:28:30 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#ifndef EXEC_H
+#define EXEC_H
+#include "./minishell.h"
+#include "./ft_malloc.h"
 
-void	ft_putstr_fd(char *s, int fd)
-{
-	if(!s)
-		return(write(fd, "(null)", 6), (void)0);
-	while (*s)
-	{
-		write(fd, s, 1);
-		s++;
-	}
-}
+#include <stdbool.h>
+
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+# include <signal.h> 
+
+
+#endif

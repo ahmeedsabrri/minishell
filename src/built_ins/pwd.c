@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/22 00:35:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/01 07:20:53 by asabri           ###   ########.fr       */
+/*   Created: 2023/07/08 13:28:19 by yelwadou          #+#    #+#             */
+/*   Updated: 2023/08/16 11:07:27 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "../../includes/minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	pwd()
 {
-	if(!s)
-		return(write(fd, "(null)", 6), (void)0);
-	while (*s)
+	char	*current;
+
+	current = getcwd(NULL, 0);
+	if (current)
 	{
-		write(fd, s, 1);
-		s++;
+		ft_putstr_fd(current, STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	}
+	g_global_exit = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 05:51:04 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/05 06:52:01 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void lexer1(t_init *in,char *line)
 	}
 	else if (line[in->i] == '|')
 	{   
-		add_back(&in->token,newtoken(which_flag(line[in->i],0),NULL));
+		add_back(&in->token,newtoken(which_flag(line[in->i],0),ft_strdup("|")));
 		in->h = 0;
 	}
 	(line[in->i] != '\"' && line[in->i] != '\'') && (in->space = 0);
@@ -117,6 +117,6 @@ t_token	*ft_lexer(char *line,t_env *env)
 	}
 	add_back(&in.token, newtoken(END, "newline"));
 	if (in.dq || in.sq)
-		return(fd_printf(2, "Syntax Error: Unclosed quote\n"),NULL);
+		return(fd_printf(2, "Syntax: Error Unclosed quote\n"),NULL);
 	return (in.token);
 }

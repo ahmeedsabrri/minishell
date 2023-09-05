@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 05:53:14 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/05 06:00:30 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ typedef struct s_init
 	int dq;
 	int sq;
 	int h;
-	int rin;
-	int rout;
-	int apand;
 	int space;
 	int i;
 	struct s_token	*token;

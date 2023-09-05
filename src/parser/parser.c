@@ -6,44 +6,68 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 02:40:01 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/01 01:46:04 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/05 03:00:22 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../includes/minishell.h"
+void sig_herdoc(int fd[2])
+{
+    int ttfd;
+    
+    ttfd = open(ttyname(STDERR_FILENO), O_RDONLY);
+    if (ttfd == -1)
+        return (close(fd[1]),close(fd[0]),fd_printf(2,"sig_error"));
+    close(fd[1]);
+}
+void herdoc_handler_(int param)
+{
+    (void)param;
+    close(STDIN_FILENO);
+}
 int ft_herdoc(char *delimiter)
 {
     int fd[2];
     char *line;
+
     if (pipe(fd) == -1)
         return(fd_printf(2,"error"),0);
-    while (1)
+    signal(SIGINT,herdoc_handler_);
+    while (isatty(STDIN_FILENO))
     {
         line = readline(">");
         if (!line || !ft_strcmp(line,delimiter))
+        {
+            free(line);
             break;
+        }
         fd_printf(fd[1],"%s\n",line);
         free(line);
     }
+    
+    if (!isatty(STDIN_FILENO))
+        return (signal(SIGINT,sig_handler),sig_herdoc(fd),_status(1),0);
     return (close(fd[1]),fd[0]);
 }
 
-bool parse_redir(t_redir *redir,t_token **tokens)
+bool parse_redir(t_redir **redir,t_token **tokens)
 {
     t_redir *node;
     node = malloc(sizeof(t_redir));
+    if (!node)
+        return (false);
     node->type = (*tokens)->type;
     (*tokens) = (*tokens)->next;
     if((*tokens)->type != WORD)
-        return (puts("here"), false);
+        return (false);
     node->open_file = (*tokens)->value;
     node->file_flages = O_RDONLY;
     if (node->type == ROUT || node->type == APPEND)
-        node->file_flages = O_CREAT | O_WRONLY | ((node->type == ROUT) * O_TRUNC + !(node->type == ROUT) * O_APPEND);
+        node->file_flages |= O_CREAT | O_WRONLY | ((node->type == ROUT) * O_TRUNC + !(node->type == ROUT) * O_APPEND);
     else if (node->type == HEREDOC)
         node->in_fd = ft_herdoc((*tokens)->value);
     node->next = NULL;
-    add_back_redir(&redir,node);
+    add_back_redir(redir,node);
     return (true);
 }
 
@@ -56,19 +80,16 @@ bool check_redir(t_token_type flage)
 
 t_tree *parse_cmd(t_token **tokens)
 {
-    t_token *cmd;
-    t_redir *redir;
     t_tree *tree;
-    
-    tree = NULL;
-    while((*tokens) && ((*tokens)->type == WORD || check_redir((*tokens)->type)))
+    if(!((*tokens)->type == WORD || check_redir((*tokens)->type)))
+        return(NULL);
+    tree = cmdnode();
+
+    while(((*tokens)->type == WORD || check_redir((*tokens)->type)))
     {
-        tree = cmdnode();
-        cmd = ((t_simplecmd *)tree)->simplecmd;
-        redir = ((t_simplecmd *)tree)->redir_list;
         if((*tokens)->type == WORD)
-            add_back(&cmd, newtoken(WORD, (*tokens)->value));
-        else if(!parse_redir(redir,tokens))
+            add_back(&((t_simplecmd *)tree)->simplecmd, newtoken(WORD, (*tokens)->value));
+        else if(!parse_redir(&((t_simplecmd *)tree)->redir_list,tokens))
             return (NULL);
         (*tokens) = (*tokens)->next;
     }
@@ -86,7 +107,7 @@ t_tree *parse_pipe(t_token **tokens)
     {
         *tokens = (*tokens)->next;
         tree = pipenode(tree, parse_cmd(tokens));
-        if(!((t_pipeline *)tree)->right)
+        if (!((t_pipeline *)tree)->right)
             return (NULL);
     }
     return(tree);
@@ -95,9 +116,12 @@ t_tree *parse_pipe(t_token **tokens)
 t_tree *parser(t_token *tokens)
 {
     t_tree *tree;
-
+    if(!tokens)
+        return(NULL);
+    if (tokens->type == END)
+        return (NULL);
     tree = parse_pipe(&tokens);
-    if(!tree ||  tokens->type != END)
-        return(fd_printf(2,"synatx error\n"),NULL);
+    if(!tree || tokens->type != END)
+        return(fd_printf(2,"synatx: Error near unexpected token `%s'\n", tokens->value),NULL);
     return (tree);
 }

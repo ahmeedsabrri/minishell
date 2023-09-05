@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:38:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 04:34:33 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/05 06:51:40 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ char *get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env)// bool
     while (str[i] && str[i] != c)
 		i++;
     *index = i - 1;
-    if (expnd && !herdoc)
+
+    if (expnd || !herdoc)
         return (ft_expand(ft_substr(str, j, i - j),env));
     return (ft_substr(str, j, i - j));  //return (expand(ft_substr(str, j, i - j))); ila kan false atreturni  return (ft_substr(str, j, i - j));
 }
@@ -66,7 +67,7 @@ t_token *newtoken(t_token_type flag,char *token)
 {
     t_token *lst;
     
-    lst = ft_malloc(sizeof(t_token),1);
+    lst = malloc(sizeof(t_token));
     lst->value = token;
     lst->type = flag;
     lst->next = NULL;

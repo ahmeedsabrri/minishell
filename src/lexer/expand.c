@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 01:44:30 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/31 04:37:08 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/02 23:14:32 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ char *check_expand(char *str,t_env *env, int *i)
     char *var;
     (void)env;
     index = *i + 1;
+    if(str[index] && str[index] == '?')
+    {
+        *i = index;
+        return (ft_itoa(g_global_exit));
+    }
     if(str[index] && (str[index] == '_' || ft_isalpha(str[index])))
         index++;
     while(str[index] && (str[index] == '_' || ft_isalnum(str[index])))

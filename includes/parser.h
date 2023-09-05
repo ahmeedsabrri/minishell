@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 02:40:22 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/01 01:25:03 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/04 00:00:17 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,16 @@ typedef struct s_simplecmd
     int type;
     t_token *simplecmd;
     t_redir *redir_list;
-    
 }t_simplecmd;
+
 t_tree *parser(t_token *tokens);
 t_tree *parse_pipe(t_token **tokens);
 t_tree *parse_cmd(t_token **tokens);
 int ft_herdoc(char *delimiter);
-bool parse_redir(t_redir *redir,t_token **tokens);
+bool parse_redir(t_redir **redir,t_token **tokens);
 t_tree *cmdnode();
 t_tree *pipenode(t_tree *left, t_tree *right);
 void add_back_redir(t_redir **lst,t_redir *new);
 t_redir *ft_lastlst_redir(t_redir *node);
+bool check_redir(t_token_type flage);
 #endif
