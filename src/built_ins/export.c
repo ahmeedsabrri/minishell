@@ -3,16 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:20 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/08/16 14:05:42 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/09/05 10:53:09 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 // TODO: after tokenising test "string" and edit strtok
+int check_identifier(char *identifier)
+{
+    int i = 0;
+    
+    while (identifier[i])
+    {
+        if (!((identifier[i] >= 'a' && identifier[i] <= 'z') ||
+              (identifier[i] >= 'A' && identifier[i] <= 'Z') ||
+              identifier[i] == '_'))
+        {
+            printf("'%s': not a valid identifier \n", identifier);
+            return (g_global_exit = 1, 1);
+        }
+        i++;
+    }
+    return (g_global_exit = 0, 0);
+}
 static void export_update(t_env **env, char *name, char *value)
 {
 	t_env *current = find_env(*env, name);

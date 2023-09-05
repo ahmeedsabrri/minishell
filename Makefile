@@ -6,7 +6,7 @@
 #    By: asabri <asabri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 11:03:36 by asabri            #+#    #+#              #
-#    Updated: 2023/09/05 04:15:36 by asabri           ###   ########.fr        #
+#    Updated: 2023/09/05 10:51:52 by asabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRC = src/env/env.c src/env/env_utils.c src/main.c src/lexer/lexer.c \
 	src/parser/parser_list.c src/parser/parser_utils.c  \
 	src/execution/exec.c src/built_ins/exit.c\
 	src/built_ins/echo.c src/built_ins/env.c \
-	src/built_ins/pwd.c src/built_ins/builtins.c
+	src/built_ins/pwd.c src/built_ins/builtins.c src/built_ins/cd.c src/built_ins/export.c
 
 
 CC = cc

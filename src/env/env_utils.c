@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 14:30:53 by asabri            #+#    #+#             */
-/*   Updated: 2023/05/31 14:32:08 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/05 10:09:39 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,15 @@ t_env *newvar(char **variable)
     node->val = variable[1];
     node->next = NULL;
     return (node);
+}
+
+t_env *find_env(t_env *env, char *name)
+{
+    while (env != NULL)
+    {
+        if (ft_strcmp(env->var, name) == 0)
+            return env;
+        env = env->next;
+    }
+    return NULL;
 }

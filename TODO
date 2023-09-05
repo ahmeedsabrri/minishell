@@ -1,0 +1,23 @@
+echo $var ===> SEGFAULT ==> var not exist in env
+
+cd Desktop/minishell/
+/usr/bin/cd: line 4: cd: Desktop/minishell/: No such file or directory
+
+ls | < fileafdsf : display error msg √
+
+
+> file : file not created √
+
+cat << "a" : not expand in double or single quote
+> $HOME
+> a
+$HOME
+
+cat << a
+>adsf
+>adsf
+>adsf
+>adsf
+>adsf
+>
+cat: stdin: Bad file descriptor

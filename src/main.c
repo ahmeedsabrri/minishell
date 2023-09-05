@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/05 06:11:19 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/05 10:02:43 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,15 @@ int main(int ac, char **av, char **env)
         if (!line)
             break;
         token = ft_lexer(line,envrm);
-        while (token)
-        {
-            printf("%s\n",token->value);
-            token = token->next;
-        }
-        // tree = parser(token);
-        // if (tree)
-        //     execution(tree,&envrm,env);
-        vsSEE(tree);
+        // while (token)
+        // {
+        //     printf("%s\n",token->value);
+        //     token = token->next;
+        // }
+        tree = parser(token,envrm);
+        if (tree)
+            execution(tree,&envrm,env);
+        // vsSEE(tree);
         if(*line)
             add_history(line);
     }

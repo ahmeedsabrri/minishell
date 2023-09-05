@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 04:21:58 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/05 05:26:57 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/05 11:11:24 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int redir_creation(t_redir *redir,t_env *env)
     int fd;
     if (redir->type != HEREDOC)
     {
-        fd = open(redir->open_file,redir->file_flages, 0777);
+        fd = open(redir->open_file,redir->file_flages, 0664);
         if (fd == -1)
             return (perror("fd error"),0);
         if(redir->type == ROUT || redir->type == APPEND)
@@ -106,8 +106,6 @@ void exec_cmd(t_tree *tree,t_env *env,char **_env)
         ((t_simplecmd *)tree)->simplecmd = ((t_simplecmd *)tree)->simplecmd->next;
     }
     arg[i] = NULL;
-    if (built_ins(arg,env,list_len) || !arg[0])
-        return ;
     i = -1;
     vpath = validpath(arg[0],env);
     pid = fork();
@@ -115,6 +113,8 @@ void exec_cmd(t_tree *tree,t_env *env,char **_env)
     {
         signal(SIGINT,sig_handler);
         exec_redir(tree,env,_env);
+        if (built_ins(arg,env,list_len) || !arg[0])
+            exit(0);
         execve(vpath,arg,_env);
         fd_printf(2,"Exec : command not found: %s\n",arg[0]);
         _status(127);

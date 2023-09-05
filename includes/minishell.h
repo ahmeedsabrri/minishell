@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/05 06:39:28 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/05 11:43:47 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ typedef struct s_env
     char *var;
     char *val;
     struct s_env *next;
-    // char *prev;
-    // int exit_status;
-    // int print_err;
-    // int chdir_result;
+    char *prev;
+    int exit_status;
+    int print_err;
+    int chdir_result;
 }t_env;
 
 
@@ -48,8 +48,8 @@ t_env	*ft_lstlast(t_env *node);
 t_token	*ft_lexer(char *line,t_env *env);
 t_token *ft_lastlst(t_token *node);
 void add_back(t_token **lst,t_token *new);
-t_token *newtoken(t_token_type flag,char *token);
-char *get_word(char *str, int *index,t_env *env);
+t_token *newtoken(t_token_type flag,char *token,int _herdoc);
+char *get_word(char *str, int *index,t_env *env,int herdoc);
 char *get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env);
 char *ft_expand(char *str,t_env *env);
 t_token_type which_flag(char c, bool bol);
@@ -71,4 +71,15 @@ t_env *dup_env(char **env);
 int check_identifier(char *identifier);
 void export_alone(t_env *env);
 int	built_ins(char **argv,t_env *env,int argc);
+////////////////////////////////parser
+t_tree *parser(t_token *tokens,t_env *env);
+t_tree *parse_pipe(t_token **tokens,t_env *env);
+t_tree *parse_cmd(t_token **tokens,t_env *env);
+int ft_herdoc(char *delimiter,t_env *env, int mode);
+bool parse_redir(t_redir **redir,t_token **tokens,t_env *env);
+t_tree *cmdnode();
+t_tree *pipenode(t_tree *left, t_tree *right);
+void add_back_redir(t_redir **lst,t_redir *new);
+t_redir *ft_lastlst_redir(t_redir *node);
+bool check_redir(t_token_type flage);
 #endif
