@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 04:21:58 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/06 10:04:26 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/06 10:53:07 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void exec_cmd(t_tree *tree,t_env *env,char **_env)
     pid = fork();
     if (!pid)
     {
+        signal(SIGQUIT,SIG_DFL);
         exec_redir(tree,env,_env);
         if (built_ins(arg,env,list_len) || !arg[0])
             exit(0);
@@ -124,7 +125,14 @@ void exec_cmd(t_tree *tree,t_env *env,char **_env)
         exit(127);
     }
     waitpid(pid,&status,0);
-    _status(status);
+    if (WIFEXITED(status))
+        _status(WEXITSTATUS(status));
+    else if (WIFSIGNALED(status) )
+    {
+      _status( 128 + WTERMSIG(status));
+      if (WTERMSIG(status) == SIGQUIT)
+        fd_printf(2, "Quit: %d\n", SIGQUIT);
+    }
 }
 /////////////////////////////////////////////////////PIPE
 void close_p(int fd[2])
