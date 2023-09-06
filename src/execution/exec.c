@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 04:21:58 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/05 11:11:24 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/06 09:22:10 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int redir_creation(t_redir *redir,t_env *env)
     else
     {
         dup2(redir->in_fd,STDIN_FILENO);   
-        return (close(redir->in_fd),1);
+        return (close(redir->in_fd),exit(1),1);
     }
     return(0);
 }
@@ -72,6 +72,8 @@ char *validpath(char *arg,t_env *env)
     char *whole_path;
 
     i = -1;
+    if(ft_strchr(arg, '/'))
+        return(arg);
     cmd = ft_strjoin("/",arg);
     while (env)
     {
@@ -94,6 +96,7 @@ void exec_cmd(t_tree *tree,t_env *env,char **_env)
     char **arg;
     int i;
     char *vpath;
+    int status;
     int list_len;
     pid_t pid;
 
@@ -111,16 +114,15 @@ void exec_cmd(t_tree *tree,t_env *env,char **_env)
     pid = fork();
     if (!pid)
     {
-        signal(SIGINT,sig_handler);
         exec_redir(tree,env,_env);
         if (built_ins(arg,env,list_len) || !arg[0])
             exit(0);
         execve(vpath,arg,_env);
         fd_printf(2,"Exec : command not found: %s\n",arg[0]);
-        _status(127);
         exit(127);
     }
-    waitpid(pid,NULL,0);
+    waitpid(pid,&status,0);
+    _status(status);
 }
 
 /////////////////////////////////////////////////////PIPE

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:38:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/05 09:45:06 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/06 07:09:27 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void add_back(t_token **lst,t_token *new)
     ptr = ft_lastlst(*(lst));
     ptr->next = new;
 }
-t_token *newtoken(t_token_type flag,char *token,int _herdoc)
+t_token *newtoken(t_token_type flag,t_token_type _qoute,char *token,int _herdoc)
 {
     t_token *lst;
     
@@ -71,6 +71,7 @@ t_token *newtoken(t_token_type flag,char *token,int _herdoc)
     lst->value = token;
     lst->type = flag;
     lst->herdoc = _herdoc;
+    lst->is_qoute = _qoute;
     lst->next = NULL;
     return (lst);
 }

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 02:40:01 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/05 11:51:36 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/06 07:17:03 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void herdoc_handler_(int param)
     (void)param;
     close(STDIN_FILENO);
 }
-int ft_herdoc(char *delimiter,t_env *env, int mode)
+int ft_herdoc(char *delimiter,t_env *env,t_token_type is_qoute)
 {
     int fd[2];
     char *line;
@@ -41,7 +41,7 @@ int ft_herdoc(char *delimiter,t_env *env, int mode)
             free(line);
             break;
         }
-        if (!mode)
+        if (is_qoute == NOT_QOUTE)
             line = ft_expand(line,env);
         fd_printf(fd[1],"%s\n",line);
         free(line);
@@ -67,7 +67,7 @@ bool parse_redir(t_redir **redir,t_token **tokens,t_env *env)
     if (node->type == ROUT || node->type == APPEND)
         node->file_flages |= O_CREAT | O_WRONLY | ((node->type == ROUT) * O_TRUNC + !(node->type == ROUT) * O_APPEND);
     else if (node->type == HEREDOC)
-        node->in_fd = ft_herdoc((*tokens)->value,env, (*tokens)->herdoc);  
+        node->in_fd = ft_herdoc((*tokens)->value,env, (*tokens)->is_qoute);  
     node->next = NULL;
     add_back_redir(redir,node);
     return (true);
@@ -90,7 +90,7 @@ t_tree *parse_cmd(t_token **tokens,t_env *env)
     while(((*tokens)->type == WORD || check_redir((*tokens)->type)))
     {
         if((*tokens)->type == WORD)
-            add_back(&((t_simplecmd *)tree)->simplecmd, newtoken(WORD, (*tokens)->value, 0));
+            add_back(&((t_simplecmd *)tree)->simplecmd, newtoken(WORD,(*tokens)->is_qoute, (*tokens)->value, 0));
         else if(!parse_redir(&((t_simplecmd *)tree)->redir_list,tokens,env))
             return (NULL);
         (*tokens) = (*tokens)->next;

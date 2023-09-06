@@ -8,7 +8,7 @@ ls | < fileafdsf : display error msg √
 
 > file : file not created √
 
-cat << "a" : not expand in double or single quote
+cat << "a" : not expand in double or single quote √
 > $HOME
 > a
 $HOME
@@ -20,4 +20,4 @@ cat << a
 >adsf
 >adsf
 >
-cat: stdin: Bad file descriptor
+cat: stdin: Bad file descriptor √

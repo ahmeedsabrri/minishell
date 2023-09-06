@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/05 10:02:43 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/06 08:49:47 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,18 @@ void _status(int s)
 {
     g_global_exit = s;
 }
+
 void    sig_handler(int signum)
 {
+
+    if (waitpid(-1, NULL, WNOHANG) == 0)
+        return ;
     if (signum == SIGINT)
     {
         printf("\n");
         rl_on_new_line();
         rl_replace_line("", 0);
         rl_redisplay();
-        _status(1);
     }
 }
 
