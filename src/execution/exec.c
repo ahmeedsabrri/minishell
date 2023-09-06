@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 04:21:58 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/06 09:22:10 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/06 10:04:26 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,7 @@ int	ft_lstsize(t_token *list)
 	}
 	return (i);
 }
-void close_p(int fd[2])
-{
-    close(fd[0]);
-    close(fd[1]);
-}
+
 char *validpath(char *arg,t_env *env)
 {
     char *cmd;
@@ -73,7 +69,11 @@ char *validpath(char *arg,t_env *env)
 
     i = -1;
     if(ft_strchr(arg, '/'))
-        return(arg);
+    {
+        if (!access(arg,X_OK))
+            return(arg);
+        return (fd_printf(2,"Minishell: %s: No such file or directory\n",arg),NULL);
+    }
     cmd = ft_strjoin("/",arg);
     while (env)
     {
@@ -117,15 +117,21 @@ void exec_cmd(t_tree *tree,t_env *env,char **_env)
         exec_redir(tree,env,_env);
         if (built_ins(arg,env,list_len) || !arg[0])
             exit(0);
+        if (!vpath && ft_strchr(arg[0],'/'))
+            exit(127);
         execve(vpath,arg,_env);
-        fd_printf(2,"Exec : command not found: %s\n",arg[0]);
+        fd_printf(2,"Minishell %s: command not found:\n",arg[0]);
         exit(127);
     }
     waitpid(pid,&status,0);
     _status(status);
 }
-
 /////////////////////////////////////////////////////PIPE
+void close_p(int fd[2])
+{
+    close(fd[0]);
+    close(fd[1]);
+}
 int piping_pross(t_tree *tree,t_env *env,int fd[2],int std,char **_env)
 {
     pid_t pid;
