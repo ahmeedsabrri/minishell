@@ -6,38 +6,65 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/06 07:55:46 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/09 14:50:31 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+int space_found(char *str)
+{
+	int i;
 
+	i = -1;
+	if (!str)
+		return (0);
+	while (str[++i])
+	{
+		if (str[i] == ' ')
+			return (1);
+	}
+	return (0);	
+}
 void lexer3(t_init *in,char *line,t_env *env)
 {
 	t_token *ptr;
-	
+	char **token;
+	int i;
+
+	i = -1;
+	token = NULL;
 	if (!in->space)
 	{
-		add_back(&in->token,newtoken(WORD,NOT_QOUTE,get_word(line,&in->i,env,in->h),in->h));
+		token = get_word(line,&in->i,env,in->h);
+		if (!token || !token[0])
+			add_back(&in->token,newtoken(WORD,NOT_QOUTE,NULL,in->h));
+		else 
+			while (token[++i])
+				add_back(&in->token,newtoken(WORD,NOT_QOUTE,token[i],in->h));
 		in->space = 1;
 		in->h = 0;
 	}
 	else
 	{
-	   ptr = in->token;
+	   	ptr = in->token;
 		while (ptr->next)
 			ptr = ptr->next;
-	   ptr->value = ft_strjoin(ptr->value,get_word(line,&in->i,env,ptr->herdoc));
+		token = get_word(line,&in->i,env,ptr->herdoc);
+		ptr->value = ft_strjoin(ptr->value,token[0]);
+		while (token[++i])
+			add_back(&in->token,newtoken(WORD,NOT_QOUTE,token[i],in->h));
 	}
 }
 
 void lexer2(t_init *in,char *line,t_env *env)
 {
 	t_token *ptr;
+	char **token;
 	
 	if (!in->space)
 	{
-		add_back(&in->token,newtoken(WORD,QOUTE,get_q(line,line[in->i - 1],&in->i,(in->dq == 1),in->h,env),in->h));
+		token = get_q(line,line[in->i - 1],&in->i,(in->dq == 1),in->h,env);
+		add_back(&in->token,newtoken(WORD,QOUTE,token[0],in->h));
 		in->space = 1;
 		in->h = 0;
 	}
@@ -48,7 +75,8 @@ void lexer2(t_init *in,char *line,t_env *env)
 			ptr = ptr->next;
 		if (ptr->is_qoute == NOT_QOUTE)
 			ptr->is_qoute = QOUTE;
-		ptr->value = ft_strjoin(ptr->value,get_q(line,line[in->i - 1],&in->i,(in->dq == 1),ptr->herdoc,env));
+		token = get_q(line,line[in->i - 1],&in->i,(in->dq == 1),ptr->herdoc,env);
+		ptr->value = ft_strjoin(ptr->value,token[0]);
 	}
 }
 void lexer1(t_init *in,char *line)
@@ -83,6 +111,7 @@ void ft_intia(t_init *in)
 	in->dq = 0;
 	in->sq = 0;
 	in->space = 0;
+	in->h = 0;
 }
 
 t_token	*ft_lexer(char *line,t_env *env)

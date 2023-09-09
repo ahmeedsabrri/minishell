@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asabri <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:04:12 by asabri            #+#    #+#             */
-/*   Updated: 2022/11/07 11:53:48 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/08 11:02:21 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 static void	checkstr(unsigned int *end, unsigned int *start,
@@ -64,6 +65,8 @@ char	**ft_split(char const *s, char c)
 
 	start = 0;
 	end = 0;
+	if (!s)
+		return (NULL);
 	p = malloc(sizeof(char *) * (getnb(s, c) + 1));
 	if (!p)
 		return (NULL);

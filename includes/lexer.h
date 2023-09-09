@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/06 07:09:55 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/07 09:27:32 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef enum e_token_type{
 	ROUT,
 	QOUTE,
 	NOT_QOUTE,
+	SIGNAL,
+	REDIRECTION,
 	END,
 }			t_token_type;
 

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 02:40:22 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/05 09:59:40 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/08 09:16:56 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ typedef struct s_pipeline
     t_tree *left;
     t_tree *right;
 }t_pipeline;
+
+typedef struct s_redircmd
+{
+    int type;
+    t_redir *redir_list;
+}t_redircmd;
 
 typedef struct s_simplecmd
 {

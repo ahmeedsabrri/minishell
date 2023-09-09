@@ -6,13 +6,35 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 04:21:58 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/06 10:53:07 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/09 22:27:52 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../includes/minishell.h"
 void execution(t_tree *tree,t_env **env,char **_env);
+void exec_cmd(t_tree *tree,t_env *env,char **_env);
+int	ft_lstsize(t_token *list);
 /////////////////////////////////////////////////////REDIR
+
+int is_bulting(char *cmd)
+{
+    if (!ft_strcmp(cmd,"cd"))
+        return (1);
+    else if (!ft_strcmp(cmd,"echo"))
+        return (1);
+    else if (!ft_strcmp(cmd,"export"))
+        return (1);
+    else if (!ft_strcmp(cmd,"unset"))
+        return (1);
+    else if (!ft_strcmp(cmd,"pwd"))
+        return (1);
+    else if (!ft_strcmp(cmd,"env"))
+        return (1);
+    else if (!ft_strcmp(cmd,"exit"))
+        return (1);
+    else
+        return (0);
+}
 int redir_creation(t_redir *redir,t_env *env)
 {
     (void)env;
@@ -30,8 +52,8 @@ int redir_creation(t_redir *redir,t_env *env)
     }
     else
     {
-        dup2(redir->in_fd,STDIN_FILENO);   
-        return (close(redir->in_fd),exit(1),1);
+        if (dup2(redir->in_fd,STDIN_FILENO) == -1)
+            return (perror(" dup2 Error"),exit(1),0);
     }
     return(0);
 }
@@ -40,10 +62,14 @@ void exec_redir(t_tree *tree,t_env *env,char **_env)
 {
     (void)_env;
     while(((t_simplecmd *)tree)->redir_list && check_redir(((t_simplecmd *)tree)->redir_list->type) && 
-        redir_creation(((t_simplecmd *)tree)->redir_list,env))
-        ((t_simplecmd *)tree)->redir_list = ((t_simplecmd *)tree)->redir_list->next;
+            redir_creation(((t_simplecmd *)tree)->redir_list,env))
+        ((t_simplecmd *)tree)->redir_list = ((t_simplecmd *)tree)->redir_list->next; 
+
 }
 /////////////////////////////////////////////////////CMD
+
+
+
 int	ft_lstsize(t_token *list)
 {
 	int	i;
@@ -70,7 +96,7 @@ char *validpath(char *arg,t_env *env)
     i = -1;
     if(ft_strchr(arg, '/'))
     {
-        if (!access(arg,X_OK))
+        if (!access(arg,X_OK) && !is_bulting(arg))
             return(arg);
         return (fd_printf(2,"Minishell: %s: No such file or directory\n",arg),NULL);
     }
@@ -93,14 +119,16 @@ char *validpath(char *arg,t_env *env)
 }
 void exec_cmd(t_tree *tree,t_env *env,char **_env)
 {
-    char **arg;
-    int i;
+    pid_t pid;
     char *vpath;
     int status;
+    int i;
+    char **arg;
     int list_len;
-    pid_t pid;
 
+    
     i = 0;
+    
     list_len = ft_lstsize(((t_simplecmd *)tree)->simplecmd) ;
     arg = malloc(sizeof(char *) * (list_len + 1));
     while(((t_simplecmd *)tree)->simplecmd)
@@ -109,6 +137,8 @@ void exec_cmd(t_tree *tree,t_env *env,char **_env)
         ((t_simplecmd *)tree)->simplecmd = ((t_simplecmd *)tree)->simplecmd->next;
     }
     arg[i] = NULL;
+    if (built_ins(arg,env,list_len) || !arg[0])
+        return ;
     i = -1;
     vpath = validpath(arg[0],env);
     pid = fork();
@@ -116,8 +146,6 @@ void exec_cmd(t_tree *tree,t_env *env,char **_env)
     {
         signal(SIGQUIT,SIG_DFL);
         exec_redir(tree,env,_env);
-        if (built_ins(arg,env,list_len) || !arg[0])
-            exit(0);
         if (!vpath && ft_strchr(arg[0],'/'))
             exit(127);
         execve(vpath,arg,_env);
@@ -127,13 +155,17 @@ void exec_cmd(t_tree *tree,t_env *env,char **_env)
     waitpid(pid,&status,0);
     if (WIFEXITED(status))
         _status(WEXITSTATUS(status));
-    else if (WIFSIGNALED(status) )
+    else if (WIFSIGNALED(status))
     {
       _status( 128 + WTERMSIG(status));
       if (WTERMSIG(status) == SIGQUIT)
         fd_printf(2, "Quit: %d\n", SIGQUIT);
     }
 }
+
+
+
+
 /////////////////////////////////////////////////////PIPE
 void close_p(int fd[2])
 {
@@ -180,9 +212,9 @@ void exec_pipe(t_tree *tree,t_env *env,char **_env)
 
 void execution(t_tree *tree,t_env **env,char **_env)
 {
-    
     if (tree->type == PIPE)
         exec_pipe(tree,*env,_env);
     else if (tree->type == WORD)
         exec_cmd(tree,*env,_env);
+   
 }

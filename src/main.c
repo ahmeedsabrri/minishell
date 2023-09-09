@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/06 10:24:56 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/09 14:31:50 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,24 @@ void vsSEE(t_tree *tree)
         vsSEE(pipe->right);
         
     }
-    else
+    else if (tree->type == REDIRECTION)
     {
-        while (((t_simplecmd *)tree)->redir_list)
+         while (((t_redircmd *)tree)->redir_list)
         {
-            printf("%s", ((t_simplecmd *)tree)->redir_list->open_file);
-            ((t_simplecmd *)tree)->redir_list = ((t_simplecmd *)tree)->redir_list->next;
+            printf("%s\n", ((t_redircmd *)tree)->redir_list->open_file);
+            ((t_redircmd *)tree)->redir_list = ((t_redircmd *)tree)->redir_list->next;
         }
+    }
+    else if (tree->type == WORD)
+    {
+        
         while (((t_simplecmd *)tree)->simplecmd && tree->type != PIPE)
         {
             printf("%s\n", ((t_simplecmd *)tree)->simplecmd->value);
             ((t_simplecmd *)tree)->simplecmd = ((t_simplecmd *)tree)->simplecmd->next;
         } 
     }
+    
 }
 void _status(int s)
 {
@@ -63,13 +68,11 @@ void    sig_handler(int signum)
     (void)signum;
     if (waitpid(-1, NULL, WNOHANG) == 0)
         return ;
-    if (signum == SIGINT)
-    {
-        printf("\n");
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
-    }
+    printf("\n");
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
+
 }
 
 

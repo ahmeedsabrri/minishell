@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/06 07:12:13 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/09 14:07:51 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ t_token	*ft_lexer(char *line,t_env *env);
 t_token *ft_lastlst(t_token *node);
 void add_back(t_token **lst,t_token *new);
 t_token *newtoken(t_token_type flag,t_token_type _qoute,char *token,int _herdoc);
-char *get_word(char *str, int *index,t_env *env,int herdoc);
-char *get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env);
-char *ft_expand(char *str,t_env *env);
+char **get_word(char *str, int *index,t_env *env,int herdoc);
+char **get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env);
+char **ft_expand(char *str,t_env *env,int mode);
 t_token_type which_flag(char c, bool bol);
 void _status(int s);
 void    sig_handler(int signum);
@@ -78,6 +78,7 @@ t_tree *parse_cmd(t_token **tokens,t_env *env);
 int ft_herdoc(char *delimiter,t_env *env,t_token_type is_qoute);
 bool parse_redir(t_redir **redir,t_token **tokens,t_env *env);
 t_tree *cmdnode();
+t_tree *redirnode();
 t_tree *pipenode(t_tree *left, t_tree *right);
 void add_back_redir(t_redir **lst,t_redir *new);
 t_redir *ft_lastlst_redir(t_redir *node);

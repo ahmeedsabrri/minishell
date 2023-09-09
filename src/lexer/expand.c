@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 01:44:30 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/02 23:14:32 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/09 14:31:01 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,16 @@ char *check_expand(char *str,t_env *env, int *i)
     }
     return (NULL);
 }
-char *ft_expand(char *str,t_env *env)
+char **ft_expand(char *str,t_env *env,int mode)
 {
     char *ptr;
     char *cmd;
-    
+    char **s;
+
     cmd = NULL;
     ptr = NULL;
     int i = -1;
+    s = malloc(sizeof(char *) * 2);
     while(str[++i])
     {
         if (str[i] == '$')
@@ -66,5 +68,7 @@ char *ft_expand(char *str,t_env *env)
             ptr = check_none_expand(str, &i);
         cmd = ft_strjoin(cmd,ptr);
     }
-    return (cmd);
+    if (mode == 1)
+        return (ft_split(cmd,' '));
+    return (s[0] = malloc(sizeof(char) * ft_strlen(cmd) + 1),s[0] = ft_strdup(cmd),s[1] = NULL,s);
 }
