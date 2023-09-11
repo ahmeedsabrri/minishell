@@ -6,14 +6,14 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 03:39:16 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/05 10:51:09 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 14:00:10 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 int	built_ins(char **argv,t_env *env,int argc)
 {
-    
+	
 	if (ft_strcmp(argv[0], "env") == 0)
 		return (_env(env),1);
 	// if (ft_strcmp(argv[0], "unset") == 0 && argc > 1)

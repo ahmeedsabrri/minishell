@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/09 14:07:51 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 13:33:22 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ typedef struct s_env
     int chdir_result;
 }t_env;
 
-
+// ------------------------------env------------------------------
 t_env *dup_env(char **env);
 t_env *newvar(char **variable);
 char **takevar(char *str);
 void	add_var_back(t_env **lst, t_env *new);
 t_env	*ft_lstlast(t_env *node);
-
+// ------------------------------lexer------------------------------
 t_token	*ft_lexer(char *line,t_env *env);
 t_token *ft_lastlst(t_token *node);
 void add_back(t_token **lst,t_token *new);
@@ -55,8 +55,18 @@ char **ft_expand(char *str,t_env *env,int mode);
 t_token_type which_flag(char c, bool bol);
 void _status(int s);
 void    sig_handler(int signum);
-
+void exit_status(int status);
+// ------------------------------exectution------------------------------
 void execution(t_tree *tree,t_env **env,char **_env);
+void exec_pipe(t_tree *tree,t_env *env,char **_env);
+int piping_pross(t_tree *tree,t_env *env,int fd[2],int std,char **_env);
+void close_p(int fd[2]);
+void exec_redir(t_tree *tree,t_env *env,char **_env);
+int redir_creation(t_redir *redir,t_env *env);
+int is_bulting(char *cmd);
+void exec_cmd(t_tree *tree,t_env *env,char **_env,char **arg);
+char *validpath(char *arg,t_env *env);
+int	ft_lstsize(t_token *list);
 // ------------------------------builtins------------------------------
 void pwd();
 void cd(int args_count, char **args, t_env **env);
@@ -71,7 +81,7 @@ t_env *dup_env(char **env);
 int check_identifier(char *identifier);
 void export_alone(t_env *env);
 int	built_ins(char **argv,t_env *env,int argc);
-////////////////////////////////parser
+// ------------------------------parsing------------------------------
 t_tree *parser(t_token *tokens,t_env *env);
 t_tree *parse_pipe(t_token **tokens,t_env *env);
 t_tree *parse_cmd(t_token **tokens,t_env *env);

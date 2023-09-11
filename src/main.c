@@ -6,26 +6,12 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/09 14:31:50 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 14:13:11 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// bool signalset = false;
-// void   (*SIGINT_handler)(int);
-// void ignore_signal_for_shell()
-// {
-// 	signalset = true;
-	
-// 	// ignore "Ctrl-C"
-    
-//     SIGINT_handler = signal(SIGINT, SIG_IGN);
-// 	// ignore "Ctrl-Z"
-//     signal(SIGTSTP, SIG_IGN);
-// 	// ignore "Ctrl-\"
-//     signal(SIGQUIT, SIG_IGN);
-// }
 void vsSEE(t_tree *tree)
 {
     if(!tree)
@@ -58,23 +44,6 @@ void vsSEE(t_tree *tree)
     }
     
 }
-void _status(int s)
-{
-    g_global_exit = s;
-}
-
-void    sig_handler(int signum)
-{
-    (void)signum;
-    if (waitpid(-1, NULL, WNOHANG) == 0)
-        return ;
-    printf("\n");
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
-
-}
-
 
 int main(int ac, char **av, char **env)
 {
@@ -84,7 +53,11 @@ int main(int ac, char **av, char **env)
     t_env *envrm;
     t_token *token;
     t_tree *tree;
+    int in;
+    int out;
     
+    in = dup(0);
+    out = dup(1);
     signal(SIGQUIT, SIG_IGN);
     rl_catch_signals = 0;
     envrm = dup_env(env);
@@ -92,7 +65,10 @@ int main(int ac, char **av, char **env)
     tree = NULL;
     while(1)
     {
+        dup2(in,STDIN_FILENO);
+        dup2(out,STDOUT_FILENO);
         signal(SIGINT,sig_handler);
+        
         line = readline("minishell-$ ");
         if (!line)
             break;
