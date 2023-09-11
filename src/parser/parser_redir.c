@@ -6,22 +6,12 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:08:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 20:29:20 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 21:36:32 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../includes/minishell.h"
 
-void sig_herdoc(int fd[2])
-{
-    int ttfd;
-    
-    ttfd = open(ttyname(STDERR_FILENO), O_RDONLY);
-    if (ttfd == -1)
-        return (close(fd[1]),close(fd[0]),fd_printf(2,"sig_error"));
-    close(fd[1]);
-    close(fd[0]);
-}
 void herdoc_handler_(int param)
 {
     (void)param;
@@ -54,9 +44,8 @@ int ft_herdoc(char *delimiter,t_env *env,t_token_type is_qoute)
         fd_printf(fd[1],"%s\n",line);
         free(line);
     }
-    signal(SIGINT,sig_handler);
     if (!isatty(STDIN_FILENO))
-        return (sig_herdoc(fd),_status(1),0);
+        return (close(fd[1]),close(fd[0]),_status(1),0);
     return (close(fd[1]),fd[0]);
 }
 
