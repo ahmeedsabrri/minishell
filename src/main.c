@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 14:13:11 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 19:29:53 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,19 @@ void vsSEE(t_tree *tree)
         vsSEE(pipe->right);
         
     }
-    else if (tree->type == REDIRECTION)
+    else
     {
-         while (((t_redircmd *)tree)->redir_list)
+        while (((t_simplecmd *)tree)->redir_list)
         {
-            printf("%s\n", ((t_redircmd *)tree)->redir_list->open_file);
-            ((t_redircmd *)tree)->redir_list = ((t_redircmd *)tree)->redir_list->next;
+            printf("%s\n", ((t_simplecmd *)tree)->redir_list->open_file);
+            ((t_simplecmd *)tree)->redir_list = ((t_simplecmd *)tree)->redir_list->next;
         }
+        // while (((t_simplecmd *)tree)->simplecmd && tree->type != PIPE)
+        // {
+        //     printf("%s\n", ((t_simplecmd *)tree)->simplecmd->value);
+        //     ((t_simplecmd *)tree)->simplecmd = ((t_simplecmd *)tree)->simplecmd->next;
+        // } 
     }
-    else if (tree->type == WORD)
-    {
-        
-        while (((t_simplecmd *)tree)->simplecmd && tree->type != PIPE)
-        {
-            printf("%s\n", ((t_simplecmd *)tree)->simplecmd->value);
-            ((t_simplecmd *)tree)->simplecmd = ((t_simplecmd *)tree)->simplecmd->next;
-        } 
-    }
-    
 }
 
 int main(int ac, char **av, char **env)

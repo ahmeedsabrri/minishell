@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:32:41 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/05 04:10:04 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 17:50:14 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,12 @@ void echo(int argc, char **argv)
 
     display_return = 1;
     i = 1;
-    if (argc > 1 && argv[1][0] == '-' && argv[1][1] == 'n'
+    if (!argv[1])
+    {
+        ft_putstr_fd("\n", STDOUT_FILENO);
+        return ;
+    }
+    else if (argc > 1 && argv[1][0] == '-' && argv[1][1] == 'n'
 		&& only_n(argv[1] + 2))
     {
         display_return = 0;
@@ -49,4 +54,5 @@ void echo(int argc, char **argv)
     }
     if (display_return == 1)
         ft_putstr_fd("\n", STDOUT_FILENO);
+    _status(0);
 }

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:18:31 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 15:08:08 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 17:55:39 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void exec_cmd(t_tree *tree,t_env *env,char **_env,char **arg)
     signal(SIGQUIT,SIG_DFL);
     if (!vpath && ft_strchr(arg[0],'/'))
         exit(127);
+    if (!arg[0])
+        return ;
     execve(vpath,arg,_env);
     fd_printf(2,"Minishell %s: command not found:\n",arg[0]);
     exit(127);

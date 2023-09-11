@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/09 14:50:31 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 20:25:24 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void lexer3(t_init *in,char *line,t_env *env)
 			add_back(&in->token,newtoken(WORD,NOT_QOUTE,NULL,in->h));
 		else 
 			while (token[++i])
-				add_back(&in->token,newtoken(WORD,NOT_QOUTE,token[i],in->h));
+					add_back(&in->token,newtoken(WORD,NOT_QOUTE,token[i],in->h));
 		in->space = 1;
 		in->h = 0;
 	}

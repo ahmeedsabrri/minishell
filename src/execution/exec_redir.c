@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:19:32 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 15:04:14 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 19:47:35 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,17 @@ int redir_creation(t_redir *redir,t_env *env)
     {
         fd = open(redir->open_file,redir->file_flages, 0664);
         if (fd == -1)
-            return (perror("fd error"),0);
+            return (fd_printf(2,"Minishell: %s: No such file or directory\n",redir->open_file),exit(1),0);
         if(redir->type == ROUT || redir->type == APPEND)
-            dup2(fd,STDOUT_FILENO);
+        {
+            if (dup2(fd,STDOUT_FILENO) == -1)
+                return (perror("dup2 error"),exit(1),0);
+        }
         else
-            dup2(fd,STDIN_FILENO);
+        {
+            if (dup2(fd,STDIN_FILENO) == -1)
+                return (perror("dup2 error"),exit(1),0);
+        }
         return (close(fd),1);
     }
     else

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 01:44:30 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/09 14:31:01 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 18:41:36 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char *check_expand(char *str,t_env *env, int *i)
     char *var;
     (void)env;
     index = *i + 1;
+    if (str[index] == 0)
+        return ("$");
     if(str[index] && str[index] == '?')
     {
         *i = index;
