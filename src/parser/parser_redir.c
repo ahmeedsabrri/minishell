@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:08:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 21:36:32 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 22:52:14 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int ft_herdoc(char *delimiter,t_env *env,t_token_type is_qoute)
     char *line;
     char **token;
 
-    token = malloc(sizeof(char *) * 2);
+    token = ft_malloc(sizeof(char *) * 2, 1);
     if (pipe(fd) == -1)
         return(fd_printf(2,"error"),0);
     signal(SIGINT,herdoc_handler_);
@@ -52,7 +52,7 @@ int ft_herdoc(char *delimiter,t_env *env,t_token_type is_qoute)
 bool parse_redir(t_redir **redir,t_token **tokens,t_env *env)
 {
     t_redir *node;
-    node = malloc(sizeof(t_redir));
+    node = ft_malloc(sizeof(t_redir), 1);
     if (!node)
         return (false);
     node->type = (*tokens)->type;

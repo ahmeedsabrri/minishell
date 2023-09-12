@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:19:32 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 19:47:35 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/12 01:56:48 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char **list_to_array(t_token *simplecmd,int *len)
 
     i = 0;
     *len = ft_lstsize(simplecmd);
-    arg = malloc(sizeof(char *) * (*len + 1));
+    arg = ft_malloc(sizeof(char *) * (*len + 1), 1);
     while(simplecmd)
     {
         arg[i++] = ft_strdup(simplecmd->value);
@@ -82,6 +82,7 @@ char **list_to_array(t_token *simplecmd,int *len)
 
 void exec_redir(t_tree *tree,t_env *env,char **_env)
 {
+    // (void)_env;
     pid_t pid;
     int status;
     int list_len;
@@ -95,6 +96,8 @@ void exec_redir(t_tree *tree,t_env *env,char **_env)
             return ;
     }
     pid = fork();
+    if (pid == -1)
+        perror("fork error");
     if (!pid)
     {
         while(((t_simplecmd *)tree)->redir_list && check_redir(((t_simplecmd *)tree)->redir_list->type) && 

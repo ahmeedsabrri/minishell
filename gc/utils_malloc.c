@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 21:54:09 by asabri            #+#    #+#             */
-/*   Updated: 2023/05/31 16:15:02 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/12 02:38:34 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_malloc	*newmalloc(void *data)
 	t_malloc	*n;
 
 	n = malloc(sizeof(t_malloc));
+	if (!n)
+		return (NULL);
 	return (n->data = data, n->next = NULL, n);
 }
 

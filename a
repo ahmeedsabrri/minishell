@@ -1,0 +1,11 @@
+Makefile
+TODO
+a
+gc
+includes
+libft-42
+minishell
+minishell.dSYM
+src
+test.c
+valgrind-out.txt

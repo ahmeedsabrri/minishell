@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asabri <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 01:51:26 by asabri            #+#    #+#             */
-/*   Updated: 2022/11/01 10:14:37 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 23:12:39 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 static int	numofdigits(int n)
@@ -88,9 +89,7 @@ char	*ft_itoa(int n)
 	zero = 0;
 	check_number(&nb, &sign, &zero);
 	count = numofdigits(nb);
-	str = (char *)malloc((count + 1 + sign + zero) * sizeof(char));
-	if (!str)
-		return (NULL);
+	str = ft_malloc((count + 1 + sign + zero) * sizeof(char), 1);
 	check_str(str, &count, sign, zero);
 	return (ft_set_str(str, &count, sign, &nb));
 }

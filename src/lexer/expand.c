@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 01:44:30 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 18:41:36 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 22:47:55 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char **ft_expand(char *str,t_env *env,int mode)
     cmd = NULL;
     ptr = NULL;
     int i = -1;
-    s = malloc(sizeof(char *) * 2);
+    s = ft_malloc(sizeof(char *) * 2, 1);
     while(str[++i])
     {
         if (str[i] == '$')
@@ -72,5 +72,5 @@ char **ft_expand(char *str,t_env *env,int mode)
     }
     if (mode == 1)
         return (ft_split(cmd,' '));
-    return (s[0] = malloc(sizeof(char) * ft_strlen(cmd) + 1),s[0] = ft_strdup(cmd),s[1] = NULL,s);
+    return (s[0] = ft_malloc(sizeof(char) * ft_strlen(cmd) + 1, 1),s[0] = ft_strdup(cmd),s[1] = NULL,s);
 }

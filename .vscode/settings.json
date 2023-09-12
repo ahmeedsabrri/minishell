@@ -18,6 +18,7 @@
         "type_traits": "c",
         "vector": "c",
         "ios": "c",
-        "locale": "c"
+        "locale": "c",
+        "minishell.h": "c"
     }
 }

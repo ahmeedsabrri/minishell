@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:38:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/09 14:30:35 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 22:54:17 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char **get_word(char *str, int *index,t_env *env,int herdoc)
     int j;
     char **s;
 
-    s = malloc(sizeof(char *) * 2);
+    s = ft_malloc(sizeof(char *) * 2, 1);
     i = *index;
     j = i;
     while (str[i] && !ft_strchr("\"\'|<> \t", str[i]))
@@ -33,7 +33,7 @@ char **get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env)// boo
     int j;
     char **s;
 
-    s = malloc(sizeof(char *) * 2);
+    s = ft_malloc(sizeof(char *) * 2, 1);
     i = *index;
     j = i;
     while (str[i] && str[i] != c)
@@ -72,7 +72,7 @@ t_token *newtoken(t_token_type flag,t_token_type _qoute,char *token,int _herdoc)
 {
     t_token *lst;
     
-    lst = malloc(sizeof(t_token));
+    lst = ft_malloc(sizeof(t_token),1);
     lst->value = token;
     lst->type = flag;
     lst->herdoc = _herdoc;

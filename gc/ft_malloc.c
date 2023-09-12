@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 21:48:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/14 08:33:04 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/12 03:35:36 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,11 @@ void	*ft_malloc(size_t size, int mode)
 	{
 		data = malloc(size);
 		if (!data)
-			return (exit(1), data);
+			return (listclear(&head), exit(1), data);
 		addfront(&head, newmalloc(data));
 		return (data);
 	}
-	if (!mode)
-		return (listclear(&head), NULL);
-	if (mode == 2)
-		return (listclear(&head), NULL);
+	if (mode == 0)
+		listclear(&head);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 14:30:53 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/05 10:09:39 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/12 01:49:55 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ char **takevar(char *str)
     while (str[++j]);
     while (str[i] != '=')
         i++;
-    var[0] = ft_substr(str,0,i);
-    var[1] = ft_substr(str,i + 1,j);
+    var[0] = ft_substr_env(str,0,i);
+    var[1] = ft_substr_env(str,i + 1,j);
     return(var);
 }
 
@@ -63,6 +63,10 @@ t_env *newvar(char **variable)
     node = malloc(sizeof(t_env));
     node->var = variable[0];
     node->val = variable[1];
+    node->prev = NULL;
+    node->print_err = 0;
+    node->exit_status = 0;
+    node->chdir_result = 0;
     node->next = NULL;
     return (node);
 }

@@ -6,7 +6,7 @@
 #    By: asabri <asabri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 11:03:36 by asabri            #+#    #+#              #
-#    Updated: 2023/09/11 18:11:38 by asabri           ###   ########.fr        #
+#    Updated: 2023/09/12 02:46:00 by asabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,14 +22,14 @@ SRC = src/env/env.c src/env/env_utils.c src/main.c src/lexer/lexer.c \
 
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror
 READLINE_PATH=$(shell brew --prefix readline)
 RM = rm -rf
 HEADER = includes/minishell.h includes/ft_malloc.h includes/lexer.h 
 
 OBJS = $(SRC:.c=.o)
 
-all : credit
+all : $(NAME)
 
 libftrule :
 	make -C libft-42
@@ -48,11 +48,3 @@ fclean : clean
 	make fclean -C libft-42
 	
 re : fclean all
-
-credit: $(NAME)
-	@echo "███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "
-	@echo "████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "
-	@echo "██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     "
-	@echo "██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "
-	@echo "██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"
-	@echo "╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 04:21:58 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 13:20:57 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 23:49:26 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,5 @@ void execution(t_tree *tree,t_env **env,char **_env)
         exec_pipe(tree,*env,_env);
     else if (tree->type == WORD)
         exec_redir(tree,*env,_env);
+    return ;
 }

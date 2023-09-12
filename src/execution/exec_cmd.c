@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:18:31 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 17:55:39 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/12 02:11:33 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ char *validpath(char *arg,t_env *env)
 void exec_cmd(t_tree *tree,t_env *env,char **_env,char **arg)
 {
     (void)tree;
+    (void)_env;
     char *vpath;
    
     vpath = validpath(arg[0],env);

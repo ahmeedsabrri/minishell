@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:20:14 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 13:36:36 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 23:30:27 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void    sig_handler(int signum)
     rl_on_new_line();
     rl_replace_line("", 0);
     rl_redisplay();
-
+    _status(1);
 }
 
 void _status(int s)

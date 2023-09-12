@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:04:12 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/08 11:02:21 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/11 23:14:04 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,6 @@ char const *s, char c)
 	*end = *start;
 	while (s[*end] != c && s[*end] != 0)
 		*end += 1;
-}
-
-static char	**free_(char **array)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-	return (NULL);
 }
 
 static unsigned int	getnb(char const *s, char c)
@@ -67,9 +53,7 @@ char	**ft_split(char const *s, char c)
 	end = 0;
 	if (!s)
 		return (NULL);
-	p = malloc(sizeof(char *) * (getnb(s, c) + 1));
-	if (!p)
-		return (NULL);
+	p = ft_malloc(sizeof(char *) * (getnb(s, c) + 1), 1);
 	r = (char *)s;
 	i = 0;
 	while (i < getnb(s, c))
@@ -77,7 +61,7 @@ char	**ft_split(char const *s, char c)
 		checkstr(&end, &start, r, c);
 		p[i] = ft_substr(s, start, end - start);
 		if (p[i] == NULL)
-			return (free_(p));
+			return (NULL);
 		start = end;
 		i++;
 	}
