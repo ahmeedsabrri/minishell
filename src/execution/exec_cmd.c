@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:18:31 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/12 02:11:33 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/13 01:15:48 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char *validpath(char *arg,t_env *env)
     i = -1;
     if(ft_strchr(arg, '/'))
     {
-        if (!access(arg,X_OK) && is_bulting(arg))
+        if (!access(arg,X_OK))
             return(arg);
         return (fd_printf(2,"Minishell: %s: No such file or directory\n",arg),NULL);
     }

@@ -6,39 +6,12 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/12 03:51:56 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/13 01:09:07 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// void vsSEE(t_tree *tree)
-// {
-//     if(!tree)
-//         return ;
-//     if(tree->type == PIPE)
-//     {
-//         t_pipeline *pipe = (t_pipeline *)tree;
-//         vsSEE(pipe->left);
-//         // printf("l_%d\n",pipe->left->type);
-//         printf("|");
-//         vsSEE(pipe->right);
-        
-//     }
-//     else
-//     {
-//         while (((t_simplecmd *)tree)->redir_list)
-//         {
-//             printf("%s\n", ((t_simplecmd *)tree)->redir_list->open_file);
-//             ((t_simplecmd *)tree)->redir_list = ((t_simplecmd *)tree)->redir_list->next;
-//         }
-//         // while (((t_simplecmd *)tree)->simplecmd && tree->type != PIPE)
-//         // {
-//         //     printf("%s\n", ((t_simplecmd *)tree)->simplecmd->value);
-//         //     ((t_simplecmd *)tree)->simplecmd = ((t_simplecmd *)tree)->simplecmd->next;
-//         // } 
-//     }
-// }
 void	listclear_env(t_env **head)
 {
 	t_env	*tmp;
@@ -64,7 +37,7 @@ void ff()
 }
 int main(int ac, char **av, char **env)
 {
-    atexit(ff);
+    // atexit(ff);
     (void)ac;
     (void)av;
     char *line;
