@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yamajid <yamajid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:24 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/15 00:01:14 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/09/21 08:29:02 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void unset(t_env **env, char **argv, int argc)
     t_env *prev;
 
     i = 1;
+    
     while (i < argc)
     {
         prev = NULL;
@@ -40,6 +41,13 @@ void unset(t_env **env, char **argv, int argc)
         }
         i++;
     }
+
+    // ptr = *env;
+    //       while (ptr)
+    //     {
+    //         printf("*%s*\n", ptr->var);
+    //         ptr = ptr->next;
+    //     }
 }
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:15 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/08/16 10:01:45 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/09/21 05:24:03 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void exit_built(int args_count, char **input)
     int i = 1;
     if (args_count == 1)
     {
-        exit(0);
-        g_global_exit = 0;
+        exit(g_global_exit);
     }
     while (i < args_count)
     {
@@ -76,8 +75,6 @@ void exit_built(int args_count, char **input)
     }
     else
     {
-        int exit_code = ft_atoi(input[1]);
-        exit(exit_code);
-        g_global_exit = exit_code;
+        exit(g_global_exit);
     }
 }

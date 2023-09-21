@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:20:14 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 23:30:27 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/21 05:17:54 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void exit_status(int status)
         _status(WEXITSTATUS(status));
     else if (WIFSIGNALED(status))
     {
-      _status( 128 + WTERMSIG(status));
+      _status(128 + WTERMSIG(status));
       if (WTERMSIG(status) == SIGQUIT)
         fd_printf(2, "Quit: %d\n", SIGQUIT);
     }

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:20 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/21 04:56:18 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/21 08:41:00 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,7 +315,7 @@ void sort_list_for_export(t_env **env)
 		j = i - 1;
 		while (j--)
 		{
-			if (ft_strncmp((*env)->var, (*env)->next->var, 1) > 0)
+			if ((*env)->next && ft_strncmp((*env)->var, (*env)->next->var, 1) > 0)
 			{
 				var = (*env)->var;
 				val = (*env)->val;
@@ -335,7 +335,6 @@ void sort_list_for_export(t_env **env)
 void export_alone(t_env *env)
 {
 	t_env *tmp;
-
 	tmp = env;
 	sort_list_for_export(&tmp);
 	while(tmp)

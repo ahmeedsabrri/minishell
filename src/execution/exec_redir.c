@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:19:32 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/21 01:51:56 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/21 08:34:45 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char **list_to_array(t_token *simplecmd,int *len)
     return (arg);
 }
 
-void exec_redir(t_tree *tree,t_env *env,char **_env)
+void exec_redir(t_tree *tree,t_env **env,char **_env)
 {
     // (void)_env;
     pid_t pid;
@@ -91,8 +91,8 @@ void exec_redir(t_tree *tree,t_env *env,char **_env)
     arg = list_to_array(((t_simplecmd *)tree)->simplecmd,&list_len);
     if (is_bulting(arg[0]))
     {
-        redir_creation(((t_simplecmd *)tree)->redir_list,env);
-        if (built_ins(arg,env,list_len) || !arg[0])
+        redir_creation(((t_simplecmd *)tree)->redir_list, *env);
+        if (built_ins(arg, env,list_len) || !arg[0])
             return ;
     }
     pid = fork();
@@ -101,10 +101,10 @@ void exec_redir(t_tree *tree,t_env *env,char **_env)
     if (!pid)
     {
         while(((t_simplecmd *)tree)->redir_list && check_redir(((t_simplecmd *)tree)->redir_list->type) && 
-                redir_creation(((t_simplecmd *)tree)->redir_list,env))
+                redir_creation(((t_simplecmd *)tree)->redir_list, *env))
             ((t_simplecmd *)tree)->redir_list = ((t_simplecmd *)tree)->redir_list->next;
         if (arg[0])
-            exec_cmd(tree,env,_env,arg);
+            exec_cmd(tree, *env,_env,arg);
         exit(0);
     }
     waitpid(pid,&status,0);
