@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 00:55:49 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 22:44:26 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/20 02:43:48 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,6 @@ char	**ft_split(char const *s, char c);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_strndup(const char *s1,int len);
 char	*ft_strdup_expand(char *s1);
+char	*ft_strdup_env(const char *s1);
+char	*ft_strjoin_env(char const *s1, char const *s2);
 #endif

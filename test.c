@@ -86,3 +86,27 @@
         //     printf("%s\n",token->value);
         //     token = token->next;
         // }
+
+
+# include <sys/types.h>
+# include <dirent.h>
+# include <stdio.h>
+
+int main(int argc, char const *argv[])
+{
+       DIR *dir;
+
+       dir = opendir("/Users/asabri/Desktop/minishell");
+
+       struct dirent *entity;
+       entity = readdir(dir);
+       if (!entity)
+              return (0);
+       while(entity)
+       {
+              if (!start_with(entity->d_name))
+                     printf("%s\n",entity->d_name);
+              entity = readdir(dir);
+       }
+       return 0;
+}

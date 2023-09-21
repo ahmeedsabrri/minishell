@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/13 01:09:07 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/21 02:51:39 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	listclear_env(t_env **head)
 		tmp = tmp->next;
 		free(ptr->var);
 		free(ptr->val);
-		free(ptr->prev);
 		free(ptr);
 	}
 	*head = NULL;
@@ -66,6 +65,12 @@ int main(int ac, char **av, char **env)
         if (!line)
             break;
         token = ft_lexer(line,envrm);
+
+        // while (token)
+        // {
+        //     printf("%s\n",token->value);
+        //     token = token->next;
+        // }
         tree = parser(token,envrm);
         if (tree)
             execution(tree,&envrm,env);
@@ -74,7 +79,7 @@ int main(int ac, char **av, char **env)
         free (line);
         ft_malloc(0,0);
     }
-    listclear_env(&envrm);
     ft_malloc(0,0);
+    listclear_env(&envrm);
     return 0;
 }

@@ -6,187 +6,235 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/05 04:13:39 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/21 02:16:17 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	update_env(t_env **env, const char *pwd, const char *oldpwd)
+char *get_home_path(t_env **env)
 {
-	t_env	*pwd_var;
-	t_env	*oldpwd_var;
+    char *str;
+    t_env *ptr;
 
-	if (oldpwd == NULL)
-		return ;
-	pwd_var = find_env(*env, "PWD");
-	if (pwd_var)
-	{
-		free(pwd_var->val);
-		pwd_var->val = ft_strdup(pwd);
-	}
-	oldpwd_var = find_env(*env, "OLDPWD");
-	if (oldpwd_var)
-	{
-		free(oldpwd_var->val);
-		oldpwd_var->val = ft_strdup(oldpwd);
-	}
-}
-
-void	check_oldpwd(t_env **env)
-{
-	t_env	*oldpwd;
-	char	**new_old;
-
-	oldpwd = find_env(*env, "OLDPWD");
-	if (oldpwd)
-	{
-		free(oldpwd->val);
-		oldpwd->val = ft_strdup("");
-	}
-	else if (!oldpwd)
-	{
-		new_old = malloc(sizeof(char *) * 2);
-		new_old[0] = ft_strdup("OLDPWD");
-		new_old[1] = ft_strdup("");
-		add_var_back(env, newvar(new_old));
-	}
-}
-
-void check_home(t_env *env)
-{
-    t_env *home;
-
-    home = find_env(env, "HOME");
-    if (home == NULL || home->val == NULL)
+    str = NULL;
+    ptr = *env;
+    while (ptr)
     {
-        printf("HOME not set\n");
-		env->print_err = 1;
-        return;
+        if (ft_strcmp(ptr->var, "HOME") == 0)
+        {
+            str = (char *)malloc(sizeof(ptr->val));
+            if (!str)
+                return (NULL);
+            str = ptr->val;
+        }
+        ptr = ptr->next;
     }
-    // chdir(home->val);
+    return (str);
 }
-void	check_cd_dash(t_env **env)
+
+void set_env_var(t_env **env, char *key, char *value)
 {
-	t_env *prev_dir_node;
-		prev_dir_node = find_env(*env, "OLDPWD");
-		if (prev_dir_node->val && prev_dir_node->val[0] != '\0')
-		{
-			(*env)->chdir_result = chdir(prev_dir_node->val);
-			pwd();
-		}
-		else
-		{
-			printf("cd : OLDPWD not set\n");
-			(*env)->print_err = 1;
-		}
+    // Check environment list for existing key
 
+    t_env *head;
+    
+    head = *env;
+    if (head == NULL)
+        return ;   
+    while (head) 
+    {
+        if (ft_strcmp((head)->var, key) == 0) 
+        {
+            // Here, free the old value and replace with new one
+            
+            (head)->val = NULL;
+            (head)->val = ft_strdup_env(value);
+            return;
+        }
+        head = (head)->next;
+    }
 }
-void	change_dir(char **args, t_env **env, int args_count)
+
+char *get_env_var(t_env **env, char *key)
 {
-	t_env *home = find_env(*env, "HOME");
-	(*env)->print_err = 0;
-	(*env)->chdir_result = -1;
-	if (args_count == 1 || (args_count == 2 && args[1][0] == '~')
-		|| (args[1][0] == '-' && args[1][1] == '-' && args[1][2] == '\0'))
-		{
-			check_home(*env);
-			if (home != NULL && home->var != NULL)
-				(*env)->chdir_result = chdir(home->val);
-		}
-	else if (args_count == 2 && args[1][0] == '-' && args[1][1] == '\0')
-		check_cd_dash(env);
-	else if (args_count == 2 && args[1][0] == '-' && args[1][1] != '\0')
-	{
-		printf("cd: -%c: invalid option\n", args[1][1]);
-		(*env)->print_err = 1;
-	}
-	else if (args_count == 2)
-		(*env)->chdir_result = chdir(args[1]);
-	else if (args_count > 2)
-	{
-		printf("cd: too many arguments\n");
-		(*env)->print_err = 1;
-	}
+    if (env == NULL) return NULL;
+    while (*env)
+    {
+        if (ft_strcmp((*env)->var, key) == 0) {
+            return (*env)->val;
+        }
+        env = &(*env)->next;
+    }
+    return NULL;
 }
-
-
-
-void	cd(int args_count, char **args, t_env **env)
+void ft_add_to_val(t_env **env, char *key)
 {
-	char *new_pwd;
-	char *old;
-
-	old = getcwd(NULL, 0);
-	change_dir(args, env, args_count);
-	new_pwd = getcwd(NULL, 0);
-	if (!new_pwd)
-	{
-		printf("cd: error retrieving current directory: getcwd:\
- cannot access parent directories: No such file or directory\n");
-	}
-	else if (errno != 0 && (*env)->print_err == 0 && (*env)->chdir_result == -1)
-		perror("cd");
-	else if ((*env)->print_err == 0)
-		update_env(env, new_pwd, old);
-	if ((*env)->chdir_result == 0)
-		g_global_exit = 0;
-	if ((*env)->chdir_result == -1)
-		g_global_exit = 1;
-	free(old);
+    if (env == NULL) return ;
+    while (*env) {
+        if (ft_strcmp((*env)->var, key) == 0) {
+            (*env)->val = ft_strjoin_env((*env)->val, "/..");
+            return;
+        }
+        env = &(*env)->next;
+    }
 }
-////////////////////////////////////////////////////////////
 
-// void	cd(int args_count, char **args, t_env **env)
+void update_pwd(t_env **env, char **argv)
+{
+    char *old_pwd;
+    char *new_pwd;
+    char *n_pwd;
+
+    old_pwd = get_env_var(env, "PWD"); 
+    if (old_pwd)
+        set_env_var(env, "OLDPWD", old_pwd);
+    new_pwd = getcwd(NULL, 0);
+    if (new_pwd)
+        set_env_var(env, "PWD", new_pwd);
+    else
+    {
+        n_pwd = get_env_var(env, "PWD");
+        if (ft_strcmp(argv[1], ".") == 0)
+            set_env_var(env, "PWD", ft_strjoin_env(n_pwd, "/."));
+        else if (ft_strcmp(argv[1], "..") == 0)
+            set_env_var(env, "PWD", ft_strjoin_env(n_pwd, "/.."));
+        ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", STDOUT_FILENO);
+    }
+}
+
+
+void cd_command(char **argv, t_env **env)
+{
+    char *str;
+
+    if (argv[1] != NULL)
+    {
+        if (argv[0] && argv[1])
+        {
+            if (access(argv[1], F_OK))
+            {
+                ft_putstr_fd("minishell cd: ", STDOUT_FILENO);
+                ft_putstr_fd(argv[1], STDOUT_FILENO);
+                ft_putstr_fd(" : no such file or directory: \n", STDOUT_FILENO);
+                _status(1);
+            }
+            else if ((access(argv[1], X_OK) == 0 && access(argv[1], W_OK) == 0 && access(argv[1], R_OK) == 0))
+            {
+                if (chdir(argv[1]) == 0)
+                {
+                    update_pwd(env, argv);
+                    return ;
+                }
+            }
+            else if ((access(argv[1], X_OK) != 0 || access(argv[1], W_OK) != 0 || access(argv[1], R_OK) != 0))
+            {
+                ft_putstr_fd("minishell: cd:", STDOUT_FILENO);
+                ft_putstr_fd(argv[1], STDOUT_FILENO);
+                ft_putstr_fd(" : Permission denied \n", STDOUT_FILENO);
+                _status(1);
+                return ;
+            }
+        }
+    }
+    else
+    {
+        str = get_home_path(env);
+        if (!str)
+        {
+            ft_putstr_fd("minishell: cd: HOME not set\n", STDOUT_FILENO);
+            _status(1);
+            return;
+        }
+        if (!chdir(str)) 
+        {
+            // Update OLDPWD and PWD
+            update_pwd(env,argv);
+        }
+        else
+        {
+            printf("minishell: can't change to home directory\n");
+            _status(1);  
+        }
+    }
+    return;
+}
+
+
+// int cd_command(char **argv, t_env **env)
 // {
-// 	char	*new_pwd;
-// 	char	*home;
-// 	char	*old;
-// 	t_env	*prev_dir_node;
+//     char *str;
 
-// 	home = getenv("HOME");
-// 	old = getcwd(NULL, 0);
-// 	(*env)->print_err = 0;
-// 	(*env)->chdir_result = -1;
-// 	if (args_count == 1 || (args_count == 2 && args[1][0] == '~')
-// 		|| (args[1][0] == '-' && args[1][1] == '-' && args[1][2] == '\0'))
-// 		(*env)->chdir_result =  chdir(home);
-// 	else if (args_count == 2 && args[1][0] == '-' && args[1][1] != '\0')
-// 	{
-// 		printf("cd: -%c: invalid option\n", args[1][1]);
-// 		(*env)->print_err = 1;
-// 	}
-// 	else if (args_count == 2 && args[1][0] == '-' && args[1][1] == '\0')
-// 	{
-// 		prev_dir_node = find_env(*env, "OLDPWD");
-// 		if (prev_dir_node->val && prev_dir_node->val[0] != '\0')
-// 		{
-// 			(*env)->chdir_result =  chdir(prev_dir_node->val);
-// 			pwd();
-// 		}
-// 		else
-// 		{
-// 			printf("cd : OLDPWD not set\n");
-// 			(*env)->print_err = 1;
-// 		}
-// 	}
-// 	else if (args_count == 2)
-// 		(*env)->chdir_result =  chdir(args[1]);
-// 	else if (args_count > 2)
-// 	{
-// 		printf("cd: too many arguments\n");
-// 		(*env)->print_err = 1;
-// 	}
-// 	new_pwd = getcwd(NULL, 0);
-// 	if (!new_pwd)
-// 	{
-// 		printf("cd: error retrieving current directory: getcwd:
-//  cannot access parent directories: No such file or directory\n");
-// 		(*env)->print_err = 1;
-// 	}
-// 	else if (errno != 0 && (*env)->print_err == 0 && (*env)->chdir_result == -1)
-// 		perror("cd");
-// 	else if ((*env)->print_err == 0)
-// 		update_env(env, new_pwd, old);
-// 	free(old);
+//     if (argv[1] != NULL)
+//     {
+//         if (argv[0] && argv[1])
+//         {
+//             printf("1\n");
+//             if ((access(argv[1], X_OK) == 0 && access(argv[1], W_OK) == 0 && access(argv[1], R_OK) == 0))
+//             {
+//                 printf("2\n");
+//                 if (chdir(argv[1]) == 0)
+//                 {
+//                     update_pwd(env);
+//                     return 0;
+//                 }
+//                 else
+//                 {
+//                     ft_putstr_fd("minishell cd: ", STDOUT_FILENO);
+//                     ft_putstr_fd(argv[1], STDOUT_FILENO);
+//                     ft_putstr_fd(" : no such file or directory: \n", STDOUT_FILENO);
+//                     return 0;
+//                 }
+//             }
+//             else if (((access(argv[1], X_OK) != 0 || access(argv[1], W_OK) != 0 || access(argv[1], R_OK) != 0)))
+//             {
+//                 ft_putstr_fd("minishell: cd:", STDOUT_FILENO);
+//                 ft_putstr_fd(argv[1], STDOUT_FILENO);
+//                 ft_putstr_fd(" : Permission denied \n", STDOUT_FILENO);
+//                 return 0;
+//             }
+            
+//         }
+//     }
+//     else
+//     {
+//         str = get_home_path(env);
+//         if (!str)
+//         {
+//             ft_putstr_fd("minishell: cd: HOME not set\n", STDOUT_FILENO);
+//             return 0;
+//         }
+//         if (!chdir(str)) 
+//         {
+//             // Update OLDPWD and PWD
+//             update_pwd(env);
+//             return 0;
+//         }
+//         else {
+//             // If getcwd() returns NULL, the directory doesn't exist. 
+//             char *cwd = getcwd(NULL, 0);
+//             if (!cwd) {
+//                 return 1;
+//             }
+//             // Always free a string returned by getcwd() with argument NULL
+//             free(cwd);
+//         }
+//     }
+//     return 0;
+// }
+
+// void handle_cd_command(char **argv, t_env **env)
+// {
+//     int cd_fail_count = 0;
+//     int result = cd_command(argv, env);
+//     if (result == 1) {
+//         if (cd_fail_count == 0) {
+//             printf("cd: ..: No such file or directory\n");
+//         } else {
+//             printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+//         }
+//         cd_fail_count++;
+//     } else {
+//         cd_fail_count = 0;
+//     }
 // }

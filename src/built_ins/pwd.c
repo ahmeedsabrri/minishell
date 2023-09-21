@@ -3,24 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/08 13:28:19 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/08/16 11:07:27 by yelwadou         ###   ########.fr       */
+/*   Created: 2023/09/16 11:45:34 by yamajid           #+#    #+#             */
+/*   Updated: 2023/09/21 00:40:56 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../../includes/minishell.h"
 
-void	pwd()
-{
-	char	*current;
 
-	current = getcwd(NULL, 0);
-	if (current)
-	{
-		ft_putstr_fd(current, STDOUT_FILENO);
-		ft_putstr_fd("\n", STDOUT_FILENO);
-	}
-	g_global_exit = 0;
+
+void pwd(t_env **env)
+{
+    char *pwd;
+    (void)env;
+    // pwd = get_env_var(env, "PWD");
+    pwd = getcwd(NULL, 0);
+    if (pwd)
+    {
+        ft_putstr_fd(pwd, STDOUT_FILENO);
+        ft_putstr_fd("\n", STDOUT_FILENO);
+    }
 }

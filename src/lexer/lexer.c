@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/12 02:10:26 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/20 23:40:21 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,11 @@ void lexer3(t_init *in,char *line,t_env *env)
 			ptr = ptr->next;
 		token = get_word(line,&in->i,env,ptr->herdoc);
 		ptr->value = ft_strjoin(ptr->value,token[0]);
-		while (token[++i])
-			add_back(&in->token,newtoken(WORD,NOT_QOUTE,token[i],in->h));
+		if (token[1])
+			while (token[++i])
+				add_back(&in->token,newtoken(WORD,NOT_QOUTE,token[i],in->h));
 	}
+	
 }
 
 void lexer2(t_init *in,char *line,t_env *env)
@@ -101,6 +103,8 @@ void lexer1(t_init *in,char *line)
 		add_back(&in->token,newtoken(which_flag(line[in->i],0),NOT_QOUTE,ft_strdup("|"),0));
 		in->h = 0;
 	}
+	// else if (line[in->i] == '*')
+	// 	ft_wildcard(in,line,&in->i);
 	(line[in->i] != '\"' && line[in->i] != '\'') && (in->space = 0);
 }
 
@@ -151,6 +155,6 @@ t_token	*ft_lexer(char *line,t_env *env)
 	}
 	add_back(&in.token, newtoken(END,END, "newline",0));
 	if (in.dq || in.sq)
-		return(fd_printf(2, "Syntax: Error Unclosed quote\n"),NULL);
+		return(fd_printf(2, "Syntax: Error Unclosed quote\n"), NULL);
 	return (in.token);
 }

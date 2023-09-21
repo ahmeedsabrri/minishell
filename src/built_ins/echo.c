@@ -3,56 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yamajid <yamajid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:32:41 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/11 17:50:14 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/18 18:11:35 by yamajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int only_n(char *str)
-{
-    int i;
-
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] != 'n')
-            return (0);
-        i++;
-    }
-    return (1);
-}
-// TODO: need to fix echo $? to print out the exit status     // ---> FIXED
-// TODO: $ should be handled in minishell and expand env var //  ---> FIXED 
 void echo(int argc, char **argv)
 {
+    bool n_option;
     int i;
-    int display_return;
-
-    display_return = 1;
+    
     i = 1;
-    if (!argv[1])
+    n_option = false;
+    if (argc > 1 && strcmp(argv[1], "-n") == 0)
     {
-        ft_putstr_fd("\n", STDOUT_FILENO);
-        return ;
-    }
-    else if (argc > 1 && argv[1][0] == '-' && argv[1][1] == 'n'
-		&& only_n(argv[1] + 2))
-    {
-        display_return = 0;
+        n_option = true;
         i++;
     }
     while (i < argc)
     {
-        ft_putstr_fd(argv[i], STDOUT_FILENO);
-        if (i < argc - 1)
-            ft_putstr_fd(" ", STDOUT_FILENO);
-        i++;
+      if (i < argc - 1) {
+        printf("%s ", argv[i]);
+      }
+      else {
+        printf("%s", argv[i]);
+      }
+      i++;
     }
-    if (display_return == 1)
-        ft_putstr_fd("\n", STDOUT_FILENO);
-    _status(0);
+    if (!n_option) {
+      printf("\n");
+    }
 }

@@ -21,3 +21,19 @@ cat << a
 >adsf
 >
 cat: stdin: Bad file descriptor √
+
+
+
+/b"i"n/ls
+/bin/ls
+n/ls      √
+
+
+
+export x
+export x+= 
+//todo: this command add add new var with the same name and dosnt change the original var
+
+
+cd 
+the function "set_env_var" env null so the function dose nothing 

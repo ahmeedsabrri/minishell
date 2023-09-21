@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:17:39 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 13:18:03 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/20 02:10:06 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void exec_pipe(t_tree *tree,t_env *env,char **_env)
     int fd[2];
     int pid[2];
     int status;
-    
     
     pipe(fd);
     pid[0] = piping_pross(((t_pipeline *)tree)->left,env,fd,1,_env);

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 13:33:22 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/20 03:33:02 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
-#include <errno.h>
+# include <errno.h>
+# include <sys/types.h>
+# include <dirent.h>
 
 int g_global_exit;
 
@@ -32,10 +34,6 @@ typedef struct s_env
     char *var;
     char *val;
     struct s_env *next;
-    char *prev;
-    int exit_status;
-    int print_err;
-    int chdir_result;
 }t_env;
 
 // ------------------------------env------------------------------
@@ -68,19 +66,19 @@ void exec_cmd(t_tree *tree,t_env *env,char **_env,char **arg);
 char *validpath(char *arg,t_env *env);
 int	ft_lstsize(t_token *list);
 // ------------------------------builtins------------------------------
-void pwd();
-void cd(int args_count, char **args, t_env **env);
-void	echo(int argc, char **argv);
-void env_var(char **argv, t_env *env);
-int unset(char *variable, t_env **env_list);
-int export(char *variable, t_env **env);
-void _env(t_env *env);
-void exit_built(int args_count, char **input);
-t_env *find_env(t_env *env, char *name);
-t_env *dup_env(char **env);
-int check_identifier(char *identifier);
-void export_alone(t_env *env);
 int	built_ins(char **argv,t_env *env,int argc);
+char *get_env_var(t_env **env, char *key);
+void set_env_var(t_env **env, char *key, char *value);
+void ft_add_to_val(t_env **env, char *key);
+void update_pwd(t_env **env, char **argv);
+void cd_command(char **argv, t_env **env);
+void echo(int argc, char **argv);
+void my_env(t_env **env);
+void exit_built(int args_count, char **input);
+int export(char **argv, t_env **env, int argc);
+void pwd(t_env **env);
+void unset(t_env **env, char **argv, int argc);
+void export_alone(t_env *env);
 // ------------------------------parsing------------------------------
 t_tree *parser(t_token *tokens,t_env *env);
 t_tree *parse_pipe(t_token **tokens,t_env *env);
@@ -93,4 +91,10 @@ t_tree *pipenode(t_tree *left, t_tree *right);
 void add_back_redir(t_redir **lst,t_redir *new);
 t_redir *ft_lastlst_redir(t_redir *node);
 bool check_redir(t_token_type flage);
+
+
+
+
+
+void ft_wildcard(t_init *in,char *param,int *index);
 #endif
