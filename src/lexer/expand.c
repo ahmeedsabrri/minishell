@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 01:44:30 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 22:47:55 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/21 03:50:44 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char **ft_expand(char *str,t_env *env,int mode)
             ptr = check_none_expand(str, &i);
         cmd = ft_strjoin(cmd,ptr);
     }
+    free(str);
     if (mode == 1)
         return (ft_split(cmd,' '));
     return (s[0] = ft_malloc(sizeof(char) * ft_strlen(cmd) + 1, 1),s[0] = ft_strdup(cmd),s[1] = NULL,s);

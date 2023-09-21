@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:20 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/21 02:51:12 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/21 04:56:18 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int ft_lst_size(t_env *env)
 	int i;
 
 	i = 0;
+	if (!env)
+		return (i);
 	while (env)
 	{
 		env = env->next;

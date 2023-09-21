@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yamajid <yamajid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:32:41 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/18 18:11:35 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/09/21 03:01:07 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void echo(int argc, char **argv)
     
     i = 1;
     n_option = false;
-    if (argc > 1 && strcmp(argv[1], "-n") == 0)
+      
+    if (argc > 1 && argv[1] && strcmp(argv[1], "-n") == 0)
     {
         n_option = true;
         i++;

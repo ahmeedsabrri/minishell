@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/21 02:16:17 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/21 05:10:26 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void cd_command(char **argv, t_env **env)
             if (access(argv[1], F_OK))
             {
                 ft_putstr_fd("minishell cd: ", STDOUT_FILENO);
-                ft_putstr_fd(argv[1], STDOUT_FILENO);
+                ft_putstr_fd(ft_strdup_env(argv[1]), STDOUT_FILENO);
                 ft_putstr_fd(" : no such file or directory: \n", STDOUT_FILENO);
                 _status(1);
             }

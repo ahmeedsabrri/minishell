@@ -37,3 +37,87 @@ export x+=
 
 cd 
 the function "set_env_var" env null so the function dose nothing 
+
+
+//today 
+
+minishell-$ cd /
+minishell: cd:/ : Permission denied 
+
+1-correct one:
+
+bash-3.2$ mkdir -p b/c/d
+bash-3.2$ cd b/c/d/
+bash-3.2$ rm -fr ../../../b/
+bash-3.2$ cd ..
+cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+bash-3.2$ pwd
+/Users/asabri/Desktop/minishell/b/c/d/..
+bash-3.2$ echo $PWD
+/Users/asabri/Desktop/minishell/b/c/d/..
+bash-3.2$ cd ..
+bash-3.2$ echo $PWD
+/Users/asabri/Desktop/minishell/b
+bash-3.2$ pwd
+/Users/asabri/Desktop/minishell/b
+bash-3.2$ cd ..
+bash-3.2$ pwd
+/Users/asabri/Desktop/minishell
+
+2-worng one:
+
+mkdir -p a/b/c
+minishell-$ cd a
+minishell-$ pwd
+/private/tmp/a
+minishell-$ ls
+b
+minishell-$ c b/
+Minishell c: command not found:
+minishell-$ pwd
+/private/tmp/a
+minishell-$ cd b/c/
+minishell-$ pwd
+/private/tmp/a/b/c
+minishell-$ rm -fr ../../../
+.ifstats                      com.apple.launchd.jbVePDFeEP/ parseCompilerArgs.sh          
+a/                            com.google.Keystone/          powerlog/                     
+asabri/                       last_fs_sync                  pymp-bujwfboo/                
+minishell-$ rm -fr ../../../a
+minishell-$ cd 
+minishell-$ cd ..
+minishell: cd:.. : Permission denied 
+minishell-$ pwd
+
+minishell-$ echo -nnnnnnn p
+-nnnnnnn p
+
+
+3-heredoc
+
+minishell-$ <<a
+> asf
+> adsf
+> adsf
+> adsf
+> asf
+> adsf
+> adsfads
+> f
+> f$HOME
+> $h
+> $DSF
+> a
+=================================================================
+==98892==ERROR: AddressSanitizer: attempting double-free on 0x602000003bb0 in thread T0:
+
+4-double free
+minishell-$ << a
+> lsmvlds
+> sdlvmds
+> sdmvds
+> a
+minishell-$ ls
+Makefile        TODO            b               gc              includes        libft-42        minishell       src             test.c
+=================================================================
+==13691==ERROR: AddressSanitizer: attempting double-free on 0x602000003830 in thread T0:

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/21 02:51:39 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/21 04:07:53 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,9 @@ int main(int ac, char **av, char **env)
     envrm = dup_env(env);
     token = NULL;
     tree = NULL;
-    // ft_malloc(0,1);
+
     while(1)
     {
-        // ft_malloc(0,0);
-        ft_malloc(0,1);
         dup2(in,STDIN_FILENO);
         dup2(out,STDOUT_FILENO);
         signal(SIGINT,sig_handler);
@@ -77,9 +75,7 @@ int main(int ac, char **av, char **env)
         if(*line)
             add_history(line);
         free (line);
-        ft_malloc(0,0);
     }
-    ft_malloc(0,0);
     listclear_env(&envrm);
     return 0;
 }

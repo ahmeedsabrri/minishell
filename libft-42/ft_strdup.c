@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 03:30:08 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/21 02:36:53 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/21 04:10:43 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_strdup(const char *s1)
 
 	len = 0;
 	if (!s1)
-		return (NULL);
+		return ("");
 	while (s1[len])
 		len++;
 	p = ft_malloc((sizeof(char) * (len + 1)), 1);

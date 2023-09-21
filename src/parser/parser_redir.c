@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:08:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 22:52:14 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/21 03:56:58 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int ft_herdoc(char *delimiter,t_env *env,t_token_type is_qoute)
     char *line;
     char **token;
 
-    token = ft_malloc(sizeof(char *) * 2, 1);
     if (pipe(fd) == -1)
         return(fd_printf(2,"error"),0);
     signal(SIGINT,herdoc_handler_);
@@ -38,11 +37,13 @@ int ft_herdoc(char *delimiter,t_env *env,t_token_type is_qoute)
         if (is_qoute == NOT_QOUTE && ft_strchr(line,'$'))
         {
             token = ft_expand(line,env,0);
-            line = token[0];
-            token[1] = NULL;
+            fd_printf(fd[1],"%s\n",token[0]);
         }
-        fd_printf(fd[1],"%s\n",line);
-        free(line);
+        else
+        {
+            fd_printf(fd[1],"%s\n",line);
+            free(line);  //mybe leak here
+        }
     }
     if (!isatty(STDIN_FILENO))
         return (close(fd[1]),close(fd[0]),_status(1),0);
