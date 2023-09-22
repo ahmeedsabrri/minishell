@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/21 04:07:53 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/22 00:42:50 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,12 @@ int main(int ac, char **av, char **env)
         // }
         tree = parser(token,envrm);
         if (tree)
-            execution(tree,&envrm,env);
+            execution(tree,&envrm);
         if(*line)
             add_history(line);
         free (line);
     }
     listclear_env(&envrm);
+    exit(g_global_exit);
     return 0;
 }

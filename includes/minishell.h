@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/21 08:35:11 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/22 01:53:26 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <errno.h>
 # include <sys/types.h>
 # include <dirent.h>
+ # define PATH "/Users/asabri/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/asabri/.brew/bin"
 
 int g_global_exit;
 
@@ -42,6 +43,7 @@ t_env *newvar(char **variable);
 char **takevar(char *str);
 void	add_var_back(t_env **lst, t_env *new);
 t_env	*ft_lstlast(t_env *node);
+char ** env_to_arr(t_env *env);
 // ------------------------------lexer------------------------------
 t_token	*ft_lexer(char *line,t_env *env);
 t_token *ft_lastlst(t_token *node);
@@ -55,14 +57,14 @@ void _status(int s);
 void    sig_handler(int signum);
 void exit_status(int status);
 // ------------------------------exectution------------------------------
-void execution(t_tree *tree,t_env **env,char **_env);
-void exec_pipe(t_tree *tree,t_env *env,char **_env);
-int piping_pross(t_tree *tree,t_env *env,int fd[2],int std,char **_env);
+void execution(t_tree *tree,t_env **env);
+void exec_pipe(t_tree *tree,t_env *env);
+int piping_pross(t_tree *tree,t_env *env,int fd[2],int std);
 void close_p(int fd[2]);
-void exec_redir(t_tree *tree,t_env **env,char **_env);
+void exec_redir(t_tree *tree,t_env **env);
 int redir_creation(t_redir *redir,t_env *env);
 int is_bulting(char *cmd);
-void exec_cmd(t_tree *tree,t_env *env,char **_env,char **arg);
+void exec_cmd(t_tree *tree,t_env *env,char **arg);
 char *validpath(char *arg,t_env *env);
 int	ft_lstsize(t_token *list);
 // ------------------------------builtins------------------------------

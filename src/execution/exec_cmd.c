@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:18:31 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/21 05:14:59 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/22 00:31:47 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,15 @@ char *validpath(char *arg,t_env *env)
     }
     return (NULL);
 }
-void exec_cmd(t_tree *tree,t_env *env,char **_env,char **arg)
+void exec_cmd(t_tree *tree,t_env *env,char **arg)
 {
     (void)tree;
     char *vpath;
+    char **_env;
    
     vpath = validpath(arg[0],env);
+    _env = NULL;
+    _env = env_to_arr(env);
     signal(SIGQUIT,SIG_DFL);
     if (!vpath && ft_strchr(arg[0],'/'))
         exit(127);

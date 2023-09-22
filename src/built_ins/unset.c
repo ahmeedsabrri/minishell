@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:24 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/21 08:29:02 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/21 09:30:17 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void unset(t_env **env, char **argv, int argc)
                 else
                     prev->next = ptr->next;
                 free(ptr->var);
+                if (ptr->val)
+                    free(ptr->val);
                 free(ptr);
                 break; // node deleted, exit the while loop
             }
@@ -41,13 +43,6 @@ void unset(t_env **env, char **argv, int argc)
         }
         i++;
     }
-
-    // ptr = *env;
-    //       while (ptr)
-    //     {
-    //         printf("*%s*\n", ptr->var);
-    //         ptr = ptr->next;
-    //     }
 }
 
 

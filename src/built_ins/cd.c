@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/21 05:31:21 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/22 02:36:43 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,11 @@ char *get_env_var(t_env **env, char *key)
     if (env == NULL) return NULL;
     while (*env)
     {
-        if (ft_strcmp((*env)->var, key) == 0) {
-            return (*env)->val;
+        if (ft_strcmp((*env)->var, key) == 0) 
+        {
+            return((*env)->val);
         }
-        env = &(*env)->next;
+        *env = (*env)->next;
     }
     return NULL;
 }
@@ -95,9 +96,9 @@ void update_pwd(t_env **env, char **argv)
     else
     {
         n_pwd = get_env_var(env, "PWD");
-        if (ft_strcmp(argv[1], ".") == 0)
+        if (!ft_strcmp(argv[1], "."))
             set_env_var(env, "PWD", ft_strjoin_env(n_pwd, "/."));
-        else if (ft_strcmp(argv[1], ".."))
+        else if (!ft_strcmp(argv[1], ".."))
             set_env_var(env, "PWD", ft_strjoin_env(n_pwd, "/.."));
         ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", STDOUT_FILENO);
     }
@@ -115,11 +116,11 @@ void cd_command(char **argv, t_env **env)
             if (access(argv[1], F_OK))
             {
                 ft_putstr_fd("minishell cd: ", STDOUT_FILENO);
-                ft_putstr_fd(ft_strdup_env(argv[1]), STDOUT_FILENO);
+                ft_putstr_fd(argv[1], STDOUT_FILENO);
                 ft_putstr_fd(" : no such file or directory: \n", STDOUT_FILENO);
                 _status(1);
             }
-            else if ((access(argv[1], X_OK) == 0 && access(argv[1], W_OK) == 0 && access(argv[1], R_OK) == 0))
+            else if ((access(argv[1], X_OK) == 0 || access(argv[1], W_OK) == 0 || access(argv[1], R_OK) == 0))
             {
                 if (chdir(argv[1]) == 0)
                 {
@@ -127,7 +128,7 @@ void cd_command(char **argv, t_env **env)
                     return ;
                 }
             }
-            else if (access(argv[1], X_OK) != 0)
+            else if (access(argv[1], X_OK) != 0 || access(argv[1], W_OK) != 0 || access(argv[1], R_OK) != 0)
             {
                 ft_putstr_fd("minishell: cd:", STDOUT_FILENO);
                 ft_putstr_fd(argv[1], STDOUT_FILENO);

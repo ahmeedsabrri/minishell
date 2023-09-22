@@ -6,13 +6,13 @@
 #    By: asabri <asabri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 11:03:36 by asabri            #+#    #+#              #
-#    Updated: 2023/09/21 05:12:39 by asabri           ###   ########.fr        #
+#    Updated: 2023/09/21 10:03:08 by asabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = src/env/env.c src/env/env_utils.c src/main.c src/lexer/lexer.c \
+SRC = src/env/env.c src/env/env_utils.c src/env/env_to_array.c src/main.c src/lexer/lexer.c \
 	src/lexer/lexer_list.c src/lexer/expand.c src/lexer/lexer_utils.c src/lexer/wildcard.c\
 	gc/ft_malloc.c gc/utils_malloc.c src/parser/parser.c \
 	src/parser/parser_list.c src/parser/parser_redir.c src/parser/parser_utils.c  \
@@ -25,7 +25,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 READLINE_PATH=$(shell brew --prefix readline)
 RM = rm -rf
-HEADER = includes/minishell.h includes/ft_malloc.h includes/lexer.h 
+HEADER = includes/minishell.h includes/ft_malloc.h includes/lexer.h includes/parser.h includes/exec.h 
 
 OBJS = $(SRC:.c=.o)
 

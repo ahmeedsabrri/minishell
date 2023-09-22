@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 00:35:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/01 07:20:53 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/22 02:33:20 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	if(!s)
+	if(!*s)
 		return(write(fd, "(null)", 6), (void)0);
 	while (*s)
 	{
