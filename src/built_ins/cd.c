@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/22 02:36:43 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/22 09:31:41 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,32 @@ void set_env_var(t_env **env, char *key, char *value)
 
 char *get_env_var(t_env **env, char *key)
 {
-    if (env == NULL) return NULL;
-    while (*env)
+    t_env *ptr;
+    
+    ptr = *env;
+    if (ptr == NULL) return NULL;
+    while (ptr)
     {
-        if (ft_strcmp((*env)->var, key) == 0) 
+        if (ft_strcmp(ptr->var, key) == 0) 
         {
-            return((*env)->val);
+            return(ptr->val);
         }
-        *env = (*env)->next;
+        ptr = ptr->next;
     }
     return NULL;
 }
 void ft_add_to_val(t_env **env, char *key)
 {
-    if (env == NULL) return ;
-    while (*env) {
-        if (ft_strcmp((*env)->var, key) == 0) {
-            (*env)->val = ft_strjoin_env((*env)->val, "/..");
+    t_env *ptr;
+    
+    ptr = *env;
+    if (ptr == NULL) return ;
+    while (ptr) {
+        if (ft_strcmp(ptr->var, key) == 0) {
+            ptr->val = ft_strjoin_env(ptr->val, "/..");
             return;
         }
-        env = &(*env)->next;
+        ptr = ptr->next;
     }
 }
 
