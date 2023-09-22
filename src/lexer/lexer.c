@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/20 23:40:21 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/22 07:35:54 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ void lexer1(t_init *in,char *line)
 		add_back(&in->token,newtoken(which_flag(line[in->i],0),NOT_QOUTE,ft_strdup("|"),0));
 		in->h = 0;
 	}
-	// else if (line[in->i] == '*')
-	// 	ft_wildcard(in,line,&in->i);
 	(line[in->i] != '\"' && line[in->i] != '\'') && (in->space = 0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 02:40:01 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 18:10:41 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/22 05:33:53 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_tree *parse_pipe(t_token **tokens,t_env *env)
     {
         *tokens = (*tokens)->next;
         tree = pipenode(tree, parse_cmd(tokens,env));
-        if (!((t_pipeline *)tree)->right)
+        if (!tree->right)
             return (NULL);
     }
     return(tree);

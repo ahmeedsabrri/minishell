@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 05:44:08 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 22:51:37 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/22 05:33:37 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ bool check_redir(t_token_type flage)
 
 t_tree *pipenode(t_tree *left, t_tree *right)
 {
-    t_pipeline *n;
+    t_tree *n;
 
-    n = ft_malloc(sizeof(t_pipeline), 1);
-    return(n->left = left, n->right = right, n->type = PIPE, (t_tree *)n);
+    n = ft_malloc(sizeof(t_tree), 1);
+    return(n->left = left, n->right = right, n->type = PIPE, n);
 }
 t_tree *cmdnode()
 {

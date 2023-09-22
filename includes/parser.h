@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 02:40:22 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/08 09:16:56 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/22 05:36:50 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 typedef struct  s_tree
 {
     int type;
+    struct s_tree *left;
+    struct s_tree *right;
 }        t_tree;
 
 typedef struct s_redir
@@ -35,19 +37,6 @@ typedef struct s_redir
     char *open_file; 
     struct s_redir *next;
 }t_redir;
-
-typedef struct s_pipeline
-{
-    int type;
-    t_tree *left;
-    t_tree *right;
-}t_pipeline;
-
-typedef struct s_redircmd
-{
-    int type;
-    t_redir *redir_list;
-}t_redircmd;
 
 typedef struct s_simplecmd
 {
