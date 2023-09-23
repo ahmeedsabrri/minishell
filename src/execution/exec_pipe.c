@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:17:39 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/22 05:42:49 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/23 04:20:20 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ void exec_pipe(t_tree *tree,t_env *env)
         return ;
     close_p(fd);
     waitpid(pid[1],&status,0);
-    _status(status);
+    exit_status(status);
     while (wait(NULL) != -1);
 }

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:32:41 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/22 07:39:11 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/23 04:06:30 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ void echo(int argc, char **argv)
     if (argv[0] && !argv[1])
 	{
     	printf("\n");
+		_status(0);
 		return ;
 	}
 	else if (argv[0] && ft_check_arg(argv[i]) == 1 && !argv[2])
 	{
-		printf("1\n");
+		printf("%s\n",argv[i]);
+		_status(0);
 		return ;
 	}
 	if ((ft_need(*argv[1]) == 0 && ft_check_arg(argv[1]) == 1))

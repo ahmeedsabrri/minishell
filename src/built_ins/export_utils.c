@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yamajid <yamajid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 07:14:17 by yamajid           #+#    #+#             */
-/*   Updated: 2023/09/14 07:14:18 by yamajid          ###   ########.fr       */
+/*   Updated: 2023/09/22 10:22:43 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/minishell.h"

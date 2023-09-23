@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/22 01:53:26 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/22 10:24:14 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,4 @@ void add_back_redir(t_redir **lst,t_redir *new);
 t_redir *ft_lastlst_redir(t_redir *node);
 bool check_redir(t_token_type flage);
 
-
-
-
-
-void ft_wildcard(t_init *in,char *param,int *index);
 #endif
