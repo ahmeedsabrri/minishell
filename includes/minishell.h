@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/22 10:24:14 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/26 00:17:29 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,33 +26,45 @@
 # include <errno.h>
 # include <sys/types.h>
 # include <dirent.h>
- # define PATH "/Users/asabri/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/asabri/.brew/bin"
+# define PATH "/Users/asabri/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/asabri/.brew/bin"
 
 int g_global_exit;
 
 typedef struct s_env
 {
-    char *var;
-    char *val;
-    struct s_env *next;
+	char *var;
+	char *val;
+	struct s_env *next;
 }t_env;
+typedef struct s_norm
+{
+	t_token *token;
+	t_env   *env;
+	t_tree *tree;
+	int in;
+	int out;
+}t_norm;
 
 // ------------------------------env------------------------------
-t_env *dup_env(char **env);
-t_env *newvar(char **variable);
-char **takevar(char *str);
+t_env	*dup_env(char **env);
+t_env	*newvar(char **variable);
+char	**takevar(char *str);
 void	add_var_back(t_env **lst, t_env *new);
 t_env	*ft_lstlast(t_env *node);
-char ** env_to_arr(t_env *env);
+char	**env_to_arr(t_env *env);
 // ------------------------------lexer------------------------------
-t_token	*ft_lexer(char *line,t_env *env);
-t_token *ft_lastlst(t_token *node);
-void add_back(t_token **lst,t_token *new);
-t_token *newtoken(t_token_type flag,t_token_type _qoute,char *token,int _herdoc);
-char **get_word(char *str, int *index,t_env *env,int herdoc);
-char **get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env);
-char **ft_expand(char *str,t_env *env,int mode);
-t_token_type which_flag(char c, bool bol);
+t_token	*ft_lexer(char *line, t_env *env);
+t_token	*ft_lastlst(t_token *node);
+void	add_back(t_token **lst, t_token *new);
+t_token			*newtoken(t_token_type flag, t_token_type _qoute, 
+					char *token, int _herdoc);
+char			**get_word(char *str, int *index, t_env *env, int herdoc);
+char	**get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env);
+char			**ft_expand(char *str,t_env *env,int mode);
+void			lexer4(t_init *in);
+t_token_type	which_flag(char c, bool bol);
+int		space_found(char *str);
+void	ft_intia(t_init *in);
 void _status(int s);
 void    sig_handler(int signum);
 void exit_status(int status);
@@ -67,6 +79,7 @@ int is_bulting(char *cmd);
 void exec_cmd(t_tree *tree,t_env *env,char **arg);
 char *validpath(char *arg,t_env *env);
 int	ft_lstsize(t_token *list);
+char **list_to_array(t_token *simplecmd,int *len);
 // ------------------------------builtins------------------------------
 int	built_ins(char **argv,t_env **env,int argc);
 char *get_env_var(t_env **env, char *key);

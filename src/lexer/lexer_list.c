@@ -6,16 +6,17 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:38:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/22 10:26:01 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/24 09:14:53 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-char **get_word(char *str, int *index,t_env *env,int herdoc)
+
+char	**get_word(char *str, int *index, t_env *env, int herdoc)
 {
-	int i;
-	int j;
-	char **s;
+	int		i;
+	int		j;
+	char	**s;
 
 	s = ft_malloc(sizeof(char *) * 2, 1);
 	i = *index;
@@ -24,14 +25,16 @@ char **get_word(char *str, int *index,t_env *env,int herdoc)
 		i++;
 	*index = i - 1;
 	if (herdoc)
-		return (s[0] = ft_substr(str, j, i - j),s[1] = NULL,s);
-	return (ft_expand(ft_substr(str, j, i - j),env,1));
+		return (s[0] = ft_substr(str, j, i - j), s[1] = NULL, s);
+	return (ft_expand(ft_substr(str, j, i - j), env, 1));
 }
-char **get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env)
+
+char	**get_q(char *str, char c, int *index,
+			bool expnd, int herdoc, t_env *env)
 {
-	int i;
-	int j;
-	char **s;
+	int		i;
+	int		j;
+	char	**s;
 
 	s = ft_malloc(sizeof(char *) * 2, 1);
 	i = *index;
@@ -40,11 +43,11 @@ char **get_q(char *str,char c,int *index,bool expnd,int herdoc,t_env *env)
 		i++;
 	*index = i - 1;
 	if (expnd && !herdoc)
-		return (ft_expand(ft_substr(str, j, i - j),env,0));
-	return (s[0] = ft_substr(str, j, i - j),s[1] = NULL,s);
+		return (ft_expand(ft_substr(str, j, i - j), env, 0));
+	return (s[0] = ft_substr(str, j, i - j), s[1] = NULL, s);
 }
 
-t_token *ft_lastlst(t_token *node)
+t_token	*ft_lastlst(t_token *node)
 {
 	if (!node)
 		return (NULL);
@@ -56,24 +59,27 @@ t_token *ft_lastlst(t_token *node)
 	}
 	return (node);
 }
-void add_back(t_token **lst,t_token *new)
+
+void	add_back(t_token **lst,t_token *new)
 {
-	t_token *ptr;
+	t_token	*ptr;
 
 	ptr = *lst;
 	if (*lst == NULL)
 	{
 		*lst = new;
-		return;
+		return ;
 	}
 	ptr = ft_lastlst(*(lst));
 	ptr->next = new;
 }
-t_token *newtoken(t_token_type flag,t_token_type _qoute,char *token,int _herdoc)
+
+t_token	*newtoken(t_token_type flag, t_token_type _qoute, 
+			char *token, int _herdoc)
 {
-	t_token *lst;
-	
-	lst = ft_malloc(sizeof(t_token),1);
+	t_token	*lst;
+
+	lst = ft_malloc(sizeof(t_token), 1);
 	lst->value = token;
 	lst->type = flag;
 	lst->herdoc = _herdoc;

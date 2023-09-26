@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:31:38 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/11 22:45:50 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/26 01:54:49 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*ft_substr_env(char const *s, unsigned int start, size_t len)
 	p[i] = 0;
 	return (p);
 }
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*p;

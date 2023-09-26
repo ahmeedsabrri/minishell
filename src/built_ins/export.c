@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:20 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/21 08:41:00 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/26 01:53:23 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void change_value_if_exist(t_env **env, char *str)
 			if (ptr->val == NULL || !ptr->val[0] || ptr->val[0])
 				ptr->val = ft_substr_env(str, search_lenght(str, '=') + 1,
 					ft_strlen(str) - search_lenght(str, '='));
+			free(str);
 			return ;
 		}	
 		ptr = ptr->next;
@@ -290,10 +291,10 @@ int export(char **argv, t_env **env, int argc)
 				}
 			}
 			else if ((needed_first(argv[i][0]) && !ft_after_equ(argv[i], '=')))
-				ft_lstaddback(env, ft_lst_new(ft_substr_env(argv[i], 0 , search_lenght(argv[i], '=')), "\0"));
+				ft_lstaddback(env, ft_lst_new(ft_substr_env(ft_strdup_env(argv[i]), 0 , search_lenght(argv[i], '=')), "\0"));
 			else if ((ft_stchr(argv[i], '=')) && (needed_first(argv[i][0]) && ft_after_equ(argv[i], '=')))
-					ft_lstaddback(env, ft_lst_new(ft_substr_env(argv[i], 0, search_lenght(argv[i], '=')), 
-						ft_substr_env(argv[i], search_lenght(argv[i], '=') + 1,
+					ft_lstaddback(env, ft_lst_new(ft_substr_env(ft_strdup_env(argv[i]), 0, search_lenght(argv[i], '=')), 
+						ft_substr_env(ft_strdup_env(argv[i]), search_lenght(argv[i], '=') + 1,
 							ft_strlen(argv[i]) - search_lenght(argv[i], '='))));
 		}
 		i++;

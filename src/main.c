@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/22 00:42:50 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/25 22:07:03 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,53 +30,51 @@ void	listclear_env(t_env **head)
 	}
 	*head = NULL;
 }
-void ff()
+
+void	setup_environment(t_env **envrm, int *in, int *out, char **env)
 {
-    system("leaks minishell");
+	*in = dup(0);
+	*out = dup(1);
+	signal(SIGQUIT, SIG_IGN);
+	rl_catch_signals = 0;
+	*envrm = dup_env(env);
 }
-int main(int ac, char **av, char **env)
+
+void	run_minishell(t_env *envrm, int in, int out)
 {
-    // atexit(ff);
-    (void)ac;
-    (void)av;
-    char *line;
-    t_env *envrm;
-    t_token *token;
-    t_tree *tree;
-    int in;
-    int out;
-    
-    in = dup(0);
-    out = dup(1);
-    signal(SIGQUIT, SIG_IGN);
-    rl_catch_signals = 0;
-    envrm = dup_env(env);
-    token = NULL;
-    tree = NULL;
+	char	*line;
+	t_token	*token;
+	t_tree	*tree;
 
-    while(1)
-    {
-        dup2(in,STDIN_FILENO);
-        dup2(out,STDOUT_FILENO);
-        signal(SIGINT,sig_handler);
-        line = readline("minishell-$ ");
-        if (!line)
-            break;
-        token = ft_lexer(line,envrm);
+	while (1) 
+	{
+		dup2(in, STDIN_FILENO);
+		dup2(out, STDOUT_FILENO);
+		signal(SIGINT, sig_handler);
+		line = readline("minishell-$ ");
+		if (!line)
+			break ;
+		token = ft_lexer(line, envrm);
+		tree = parser(token, envrm);
+		if (tree)
+			execution(tree, &envrm);
+		if (*line)
+			add_history(line);
+		free(line);
+	}
+	listclear_env(&envrm);
+	exit(g_global_exit);
+}
 
-        // while (token)
-        // {
-        //     printf("%s\n",token->value);
-        //     token = token->next;
-        // }
-        tree = parser(token,envrm);
-        if (tree)
-            execution(tree,&envrm);
-        if(*line)
-            add_history(line);
-        free (line);
-    }
-    listclear_env(&envrm);
-    exit(g_global_exit);
-    return 0;
+int	main(int ac, char **av, char **env)
+{
+	t_env	*envrm;
+	int		in;
+	int		out;
+
+	(void)ac;
+	(void)av;
+	setup_environment(&envrm, &in, &out, env);
+	run_minishell(envrm, in, out);
+	return (0);
 }

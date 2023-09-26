@@ -6,75 +6,82 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:18:31 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/22 00:31:47 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/25 23:17:33 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	ft_lstsize(t_token *list)
+char	*check_executable(char *arg)
 {
-	int	i;
+	if (!access(arg, X_OK))
+		return (arg);
+	return (fd_printf(2, "Minishell: %s: No such file or directory\n", arg), 
+		exit(127), NULL);
+}
 
-	i = 0;
-	if (!list)
-		return (0);
-	while (list)
+char	*get_path(t_env *env)
+{
+	char	*path;
+
+	path = NULL;
+	while (env)
 	{
-		list = list->next;
-		i++;
+		if (ft_strcmp(env->var, "PATH") == 0)
+			path = ft_strdup(env->val);
+		env = env->next;
 	}
-	return (i);
+	return (path);
 }
 
-char *validpath(char *arg,t_env *env)
+char	*search_in_path(char *arg, t_env *env)
 {
-    char *cmd;
-    int i;
-    char **path;
-    char *vpath;
-    char *whole_path;
+	char	*cmd;
+	int		i;
+	char	**path;
+	char	*vpath;
+	char	*whole_path;
 
-    i = -1;
-    if(ft_strchr(arg, '/'))
-    {
-        if (!access(arg,X_OK))
-            return(arg);
-        return (fd_printf(2,"Minishell: %s: No such file or directory\n",arg),exit(127),NULL);
-    }
-    cmd = ft_strjoin("/",arg);
-    while (env)
-    {
-        if (ft_strcmp(env->var,"PATH") == 0)
-            whole_path = ft_strdup(env->val);
-        env = env->next;
-    }
-    if (!whole_path)
-        return (fd_printf(2,"Minishell: %s: No such file or directory\n",arg),exit(127),NULL);
-    path = ft_split(whole_path,':');
-    if (!path)
-        return (NULL);
-    while (path[++i])
-    {
-        vpath = ft_strjoin(path[i],cmd);
-        if (!access(vpath,X_OK))
-            return (vpath);
-    }
-    return (NULL);
+	i = -1;
+	cmd = ft_strjoin("/", arg);
+	whole_path = get_path(env);
+	if (!whole_path)
+		return (fd_printf(2, "Minishell: %s: No such file or directory\n", arg), 
+			exit(127), NULL);
+	path = ft_split(whole_path, ':');
+	if (!path)
+		return (NULL);
+	while (path[++i])
+	{
+		vpath = ft_strjoin(path[i], cmd);
+		if (!access(vpath, X_OK))
+			return (vpath);
+	}
+	return (NULL);
 }
-void exec_cmd(t_tree *tree,t_env *env,char **arg)
+
+char	*validpath(char *arg, t_env *env)
 {
-    (void)tree;
-    char *vpath;
-    char **_env;
-   
-    vpath = validpath(arg[0],env);
-    _env = NULL;
-    _env = env_to_arr(env);
-    signal(SIGQUIT,SIG_DFL);
-    if (!vpath && ft_strchr(arg[0],'/'))
-        exit(127);
-    execve(vpath,arg,_env);
-    fd_printf(2,"Minishell %s: command not found:\n",arg[0]);
-    exit(127);
+	if (ft_strchr(arg, '/'))
+		return (check_executable(arg));
+	else
+		return (search_in_path(arg, env));
+	return (NULL);
+}
+
+void	exec_cmd(t_tree *tree, t_env *env, char **arg)
+{
+	char	*vpath;
+	char	**_env;
+
+	(void)tree;
+	vpath = validpath(arg[0], env);
+	_env = NULL;
+	_env = env_to_arr(env);
+	signal(SIGQUIT, SIG_DFL);
+	if (!vpath && ft_strchr(arg[0], '/'))
+		exit(127);
+	execve(vpath, arg, _env);
+	fd_printf(2, "Minishell %s: command not found:\n", arg[0]);
+	exit(127);
 }

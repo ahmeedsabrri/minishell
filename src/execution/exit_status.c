@@ -6,37 +6,37 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:20:14 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/23 04:21:27 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/25 22:42:56 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void    sig_handler(int signum)
+void	sig_handler(int signum)
 {
-    (void)signum;
-    if (waitpid(-1, NULL, WNOHANG) == 0)
-        return ;
-    printf("\n");
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
-    _status(1);
+	(void)signum;
+	if (waitpid(-1, NULL, WNOHANG) == 0)
+		return ;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	_status(1);
 }
 
-void _status(int s)
+void	_status(int s)
 {
-    g_global_exit = s;
+	g_global_exit = s;
 }
 
-void exit_status(int status)
+void	exit_status(int status)
 {
-    if (WIFEXITED(status))
-        _status(WEXITSTATUS(status));
-    else if (WIFSIGNALED(status))
-    {
-      _status(128 + WTERMSIG(status));
-      if (WTERMSIG(status) == SIGQUIT)
-        fd_printf(2, "Quit: %d\n", SIGQUIT);
-    }
+	if (WIFEXITED(status))
+		_status(WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+	{
+		_status(128 + WTERMSIG(status));
+		if (WTERMSIG(status) == SIGQUIT)
+			fd_printf(2, "Quit: %d\n", SIGQUIT);
+	}
 }

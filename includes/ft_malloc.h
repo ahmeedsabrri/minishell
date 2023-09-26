@@ -6,15 +6,16 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 21:49:58 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/05 21:10:59 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/25 23:56:38 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MALLOC_H
 # define FT_MALLOC_H
 
-# include<stdlib.h>
+# include <stdlib.h>
 # include "minishell.h"
+
 typedef struct s_malloc
 {
 	void			*data;

@@ -6,22 +6,19 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/19 20:56:34 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/25 23:56:25 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
-#define LEXER_H
+# define LEXER_H
 
-#include "./minishell.h"
-#include "./ft_malloc.h"
-
-#include <stdbool.h>
-
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+# include "./minishell.h"
+# include "./ft_malloc.h"
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 
 typedef enum e_token_type{
 	WORD,
@@ -43,17 +40,17 @@ typedef struct s_token
 	t_token_type	type;
 	t_token_type	is_qoute;
 	char			*value;
-	int herdoc;
+	int				herdoc;
 	struct s_token	*next;
 }				t_token;
 
 typedef struct s_init
 {
-	int dq;
-	int sq;
-	int h;
-	int space;
-	int i;
+	int				dq;
+	int				sq;
+	int				h;
+	int				space;
+	int				i;
 	struct s_token	*token;
 }t_init;
 
