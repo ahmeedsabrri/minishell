@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 04:21:58 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/25 23:08:11 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/27 01:07:40 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,23 @@ char	**list_to_array(t_token *simplecmd, int *len)
 	i = 0;
 	*len = ft_lstsize(simplecmd);
 	arg = ft_malloc(sizeof(char *) * (*len + 1), 1);
+	while (simplecmd)
+	{
+		arg[i++] = ft_strdup(simplecmd->value);
+		simplecmd = simplecmd->next;
+	}
+	arg[i] = NULL;
+	return (arg);
+}
+
+char	**list_to_array_env(t_token *simplecmd, int *len)
+{
+	int		i;
+	char	**arg;
+
+	i = 0;
+	*len = ft_lstsize(simplecmd);
+	arg = ft_malloc(sizeof(char *) * (*len + 1), 2);
 	while (simplecmd)
 	{
 		arg[i++] = ft_strdup(simplecmd->value);

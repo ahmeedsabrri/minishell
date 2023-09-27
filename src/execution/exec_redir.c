@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:19:32 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/25 23:45:31 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/27 01:08:22 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,17 @@ void	exec_redir(t_tree *tree, t_env **env)
 	pid_t	pid;
 	int		status;
 	char	**arg;
+	char	**args;
 	int		list_len;
 
-	arg = list_to_array(((t_simplecmd *)tree)->simplecmd, &list_len);
+	arg = list_to_array_env(((t_simplecmd *)tree)->simplecmd, &list_len);
 	if (is_bulting(arg[0]))
 	{
 		redir_creation(((t_simplecmd *)tree)->redir_list, *env);
 		if (built_ins(arg, env, list_len) || !arg[0])
 			return ;
 	}
+	args = list_to_array(((t_simplecmd *)tree)->simplecmd, &list_len);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -84,7 +86,7 @@ void	exec_redir(t_tree *tree, t_env **env)
 		return ;
 	}
 	if (!pid)
-		run_cmd(tree, env, arg);
+		run_cmd(tree, env, args);
 	waitpid(pid, &status, 0);
 	exit_status(status);
 }

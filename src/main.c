@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/25 22:07:03 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/27 01:09:29 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	run_minishell(t_env *envrm, int in, int out)
 			add_history(line);
 		free(line);
 	}
-	listclear_env(&envrm);
 	exit(g_global_exit);
 }
 

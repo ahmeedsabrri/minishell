@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:20 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/26 01:53:23 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/27 00:53:27 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_env *ft_lst_new(char *str, char *val)
 {
 	t_env *head;
 
-	head = (t_env *)malloc(sizeof(t_env));
+	head = (t_env *)ft_malloc(sizeof(t_env), 2);
 	if (!head)
 		return (NULL);
 	head->var = str;

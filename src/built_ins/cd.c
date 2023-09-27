@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/09/22 09:31:41 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/27 01:14:07 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char *get_home_path(t_env **env)
     {
         if (ft_strcmp(ptr->var, "HOME") == 0)
         {
-            str = (char *)malloc(sizeof(ptr->val));
+            str = (char *)ft_malloc(sizeof(ptr->val), 2);
             if (!str)
                 return (NULL);
             str = ptr->val;
@@ -50,6 +50,7 @@ void set_env_var(t_env **env, char *key, char *value)
             
             (head)->val = NULL;
             (head)->val = ft_strdup_env(value);
+            free (value);
             return;
         }
         head = (head)->next;

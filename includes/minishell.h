@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/26 00:17:29 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/27 01:06:07 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void exec_cmd(t_tree *tree,t_env *env,char **arg);
 char *validpath(char *arg,t_env *env);
 int	ft_lstsize(t_token *list);
 char **list_to_array(t_token *simplecmd,int *len);
+char	**list_to_array_env(t_token *simplecmd, int *len);
 // ------------------------------builtins------------------------------
 int	built_ins(char **argv,t_env **env,int argc);
 char *get_env_var(t_env **env, char *key);

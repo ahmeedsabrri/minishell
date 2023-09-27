@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 14:30:53 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/25 23:51:04 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/27 00:46:01 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**takevar(char *str)
 	int		i;
 	int		j;
 
-	var = malloc(sizeof(char *) * 2);
+	var = ft_malloc(sizeof(char *) * 2, 2);
 	i = 0;
 	j = -1;
 	while (str[++j])
@@ -61,7 +61,7 @@ t_env	*newvar(char **variable)
 {
 	t_env	*node;
 
-	node = malloc(sizeof(t_env));
+	node = ft_malloc(sizeof(t_env), 2);
 	node->var = variable[0];
 	node->val = variable[1];
 	node->next = NULL;
