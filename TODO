@@ -1,4 +1,8 @@
-
+1- segf: "ll"$r
+2 - bad behavior : "$ll"
+3 - unset a freeing variable not allocated
+4 - update exit status to 0;
+5 -
 
 /*
 echo $var ===> SEGFAULT ==> var not exist in env

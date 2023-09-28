@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/24 09:07:47 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/28 01:49:27 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ void	lexer3(t_init *in, char *line, t_env *env)
 		lexer3_else(in, line, env);
 }
 
-void	lexer2(t_init *in, char *line, t_env *env)
+void	lexer2(t_init *in, char *line)
 {
 	t_token	*ptr;
 	char	**token;
 
 	if (!in->space)
 	{
-		token = get_q(line, line[in->i - 1], &in->i, (in->dq == 1), in->h, env);
+		token = get_q(line, in, &in->i, in->h);
 		add_back(&in->token, newtoken(WORD, QOUTE, token[0], in->h));
 		in->space = 1;
 		in->h = 0;
@@ -76,8 +76,7 @@ void	lexer2(t_init *in, char *line, t_env *env)
 			ptr = ptr->next;
 		if (ptr->is_qoute == NOT_QOUTE)
 			ptr->is_qoute = QOUTE;
-		token = get_q(line, line[in->i - 1], &in->i,
-				(in->dq == 1), ptr->herdoc, env);
+		token = get_q(line, in, &in->i, ptr->herdoc);
 		ptr->value = ft_strjoin(ptr->value, token[0]);
 	}
 }
@@ -116,7 +115,7 @@ t_token	*ft_lexer(char *line, t_env *env)
 	t_init	in;
 
 	i = -1;
-	ft_intia(&in);
+	ft_intia(&in, env);
 	while (line[++in.i])
 	{
 		if ((line[in.i] == '\"' && line[in.i] == line[in.i + 1]) 
@@ -124,7 +123,7 @@ t_token	*ft_lexer(char *line, t_env *env)
 			lexer4(&in);
 		else if (((in.dq && line[in.i] != '\"') 
 				|| (in.sq && line[in.i] != '\'')))
-			lexer2(&in, line, env);
+			lexer2(&in, line);
 		else if (ft_strchr("<>\'\"| \t", line[in.i]))
 			lexer1(&in, line);
 		else if (!ft_strchr("<>\'\"| \t", line[in.i]))

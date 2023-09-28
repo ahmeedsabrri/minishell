@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 04:39:49 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/24 09:07:24 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/28 01:49:58 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	lexer4(t_init *in)
 	in->i++;
 }
 
-void	ft_intia(t_init *in)
+void	ft_intia(t_init *in, t_env *env)
 {
 	in->token = NULL;
 	in->i = -1;
@@ -41,6 +41,7 @@ void	ft_intia(t_init *in)
 	in->sq = 0;
 	in->space = 0;
 	in->h = 0;
+	in->env = env;
 }
 
 int	space_found(char *str)

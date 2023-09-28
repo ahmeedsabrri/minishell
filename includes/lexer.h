@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/25 23:56:25 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/28 01:28:54 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_init
 	int				h;
 	int				space;
 	int				i;
+	struct s_env	*env;
 	struct s_token	*token;
 }t_init;
 

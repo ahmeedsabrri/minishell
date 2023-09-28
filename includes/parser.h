@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 02:40:22 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/26 01:46:10 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/28 01:52:51 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 typedef struct s_tree
 {
-	int		type;
+	int				type;
 	struct s_tree	*left;
 	struct s_tree	*right;
 }t_tree;

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:38:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/24 09:14:53 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/28 01:51:12 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ char	**get_word(char *str, int *index, t_env *env, int herdoc)
 	return (ft_expand(ft_substr(str, j, i - j), env, 1));
 }
 
-char	**get_q(char *str, char c, int *index,
-			bool expnd, int herdoc, t_env *env)
+char	**get_q(char *str, t_init *in, int *index, int herdoc)
 {
 	int		i;
 	int		j;
@@ -39,11 +38,11 @@ char	**get_q(char *str, char c, int *index,
 	s = ft_malloc(sizeof(char *) * 2, 1);
 	i = *index;
 	j = i;
-	while (str[i] && str[i] != c)
+	while (str[i] && str[i] != str[*index - 1])
 		i++;
 	*index = i - 1;
-	if (expnd && !herdoc)
-		return (ft_expand(ft_substr(str, j, i - j), env, 0));
+	if (in->h && !herdoc)
+		return (ft_expand(ft_substr(str, j, i - j), in->env, 0));
 	return (s[0] = ft_substr(str, j, i - j), s[1] = NULL, s);
 }
 
@@ -60,7 +59,7 @@ t_token	*ft_lastlst(t_token *node)
 	return (node);
 }
 
-void	add_back(t_token **lst,t_token *new)
+void	add_back(t_token **lst, t_token *new)
 {
 	t_token	*ptr;
 
