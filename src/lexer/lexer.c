@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/28 06:04:19 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/28 11:10:06 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	lexer3_else(t_init *in, char *line, t_env *env)
 	while (ptr->next)
 		ptr = ptr->next;
 	token = get_word(line, &in->i, env, ptr->herdoc);
-	if (token == NULL) {return ;}
+	if (token == NULL) 
+		return ;
 	ptr->value = ft_strjoin(ptr->value, token[0]);
 	if (token[1])
 	{

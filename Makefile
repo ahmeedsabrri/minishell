@@ -6,7 +6,7 @@
 #    By: asabri <asabri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 11:03:36 by asabri            #+#    #+#              #
-#    Updated: 2023/09/28 08:51:14 by asabri           ###   ########.fr        #
+#    Updated: 2023/09/28 12:00:31 by asabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ SRC = src/env/env.c src/env/env_utils.c src/env/env_to_array.c src/main.c src/le
 	src/parser/parser_list.c src/parser/parser_redir.c src/parser/parser_utils.c  \
 	src/execution/exec.c src/execution/exec_cmd.c src/execution/exec_pipe.c src/execution/exec_simplecmd.c src/execution/exec_redir.c src/execution/exit_status.c src/built_ins/exit.c\
 	src/built_ins/echo.c src/built_ins/env.c \
-	src/built_ins/pwd.c src/built_ins/builtins.c src/built_ins/cd.c src/built_ins/export.c src/built_ins/unset.c
+	src/built_ins/pwd.c src/built_ins/builtins.c src/built_ins/cd.c src/built_ins/cd_utils.c src/built_ins/export.c src/built_ins/unset.c \
+	src/built_ins/export_utils_1.c src/built_ins/export_utils_2.c src/built_ins/export_utils_3.c src/built_ins/export_utils_4.c \
+	src/built_ins/export_utils_5.c 
 
 
 CC = cc

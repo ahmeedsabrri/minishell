@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/28 08:50:08 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/28 12:07:14 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char			**takevar(char *str);
 void			add_var_back(t_env **lst, t_env *new);
 t_env			*ft_lstlast(t_env *node);
 char			**env_to_arr(t_env *env);
-
+char			*get_home_path(t_env **env);
 t_token			*ft_lexer(char *line, t_env *env);
 t_token			*ft_lastlst(t_token *node);
 void			add_back(t_token **lst, t_token *new);
@@ -85,17 +85,45 @@ char			**list_to_array_env(t_token *simplecmd, int *len);
 
 int				built_ins(char **argv, t_env **env, int argc);
 char			*get_env_var(t_env **env, char *key);
+
+int				ft_lst_size(t_env *env);
+
 void			set_env_var(t_env **env, char *key, char *value);
 void			ft_add_to_val(t_env **env, char *key);
 void			update_pwd(t_env **env, char **argv);
 void			cd_command(char **argv, t_env **env);
 void			echo(int argc, char **argv);
+int				needed_first(char c);
+int				ft_need(char c);
+t_env			*ft_lst_last(t_env *env);
+int				if_error(char *str);
+t_env			*ft_lst_new(char *str, char *val);
 void			my_env(t_env **env);
+int				ft_stchr(char *s, char c);
 void			exit_built(int args_count, char **input);
 int				export(char **argv, t_env **env, int argc);
 void			pwd(t_env **env);
+char			*ft_cut(char *str, char c);
+void			ft_lstaddback(t_env **env, t_env *newnode);
+int				search_lenght(char *s, char c);
+void			change_value_if_not(t_env **env, char *str);
+int				check_dupl(char *str, t_env *env);
 void			unset(t_env **env, char **argv, int argc);
 void			export_alone(t_env *env);
+void			handle_plus(t_env **env, char *arg);
+int				search_after_equ(char *str);
+int				invalid_option(char **argv);
+int				is_duplicate(char *arg, t_env *env);
+void			no_equal(char **argv, int i, t_env **env);
+void			change_value_if_exist(t_env **env, char *str);
+int				ft_after_equ(char *str, char c);
+int				ft_search_for_plus(char *str, char c);
+int				for_plus(t_env **env, char *str);
+int				check_string(char *str);
+void			wrong(void);
+void			other_cases(char **argv, int i, t_env **env);
+int				validate_arg(char *arg);
+void			change_value_for_plus(t_env **env, char *str);
 
 t_tree			*parser(t_token *tokens, t_env *env);
 t_tree			*parse_pipe(t_token **tokens, t_env *env);
