@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:38:29 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/28 01:51:12 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/28 05:48:58 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**get_q(char *str, t_init *in, int *index, int herdoc)
 	while (str[i] && str[i] != str[*index - 1])
 		i++;
 	*index = i - 1;
-	if (in->h && !herdoc)
+	if (in->dq && !herdoc)
 		return (ft_expand(ft_substr(str, j, i - j), in->env, 0));
 	return (s[0] = ft_substr(str, j, i - j), s[1] = NULL, s);
 }

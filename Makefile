@@ -6,7 +6,7 @@
 #    By: asabri <asabri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 11:03:36 by asabri            #+#    #+#              #
-#    Updated: 2023/09/26 01:46:56 by asabri           ###   ########.fr        #
+#    Updated: 2023/09/28 05:50:00 by asabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC = src/env/env.c src/env/env_utils.c src/env/env_to_array.c src/main.c src/le
 
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address 
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address 
 READLINE_PATH=$(shell brew --prefix readline)
 RM = rm -rf
 HEADER = includes/minishell.h includes/ft_malloc.h includes/lexer.h includes/parser.h includes/exec.h 

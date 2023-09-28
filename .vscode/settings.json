@@ -19,7 +19,8 @@
         "vector": "c",
         "ios": "c",
         "locale": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "unistd.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
