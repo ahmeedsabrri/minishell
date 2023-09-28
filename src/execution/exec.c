@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 04:21:58 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/27 01:07:40 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/28 08:41:23 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	execution(t_tree *tree, t_env **env)
 	if (!tree)
 		return ;
 	else if (tree->type == PIPE)
-		exec_pipe(tree,*env);
+		exec_pipe(tree, *env);
 	else if (tree->type == WORD)
 		exec_redir(tree, env);
 	return ;

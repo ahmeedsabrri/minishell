@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 02:28:50 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/06 02:28:53 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/28 09:25:52 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,17 @@ void	fd_printf(int fd, const char *fmt, ...)
 
 	i = -1;
 	va_start(s, fmt);
+	if (!fmt)
+	{
+		// printf("");
+		return ;
+	}
 	while (fmt[++i])
 	{
 		if (fmt[i] != '%')
 		{
 			write(fd, &fmt[i], 1);
-			}
+		}
 		if (fmt[i] == '%' && fmt[i + 1])
 		{
 			if (fmt[i + 1] == 's')

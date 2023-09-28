@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:08:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/26 01:57:22 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/28 09:39:36 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,17 @@ int	ft_herdoc(char *delimiter, t_env *env, t_token_type is_qoute)
 		if (is_qoute == NOT_QOUTE && ft_strchr(line, '$'))
 		{
 			token = ft_expand(line, env, 0);
-			fd_printf(fd[1], "%s\n", token[0]);
+			//fd_printf(fd[1], "%s\n", token[0]);
+			dprintf(fd[1],"%s\n", line);
+			fprintf(stderr, "not\n");
 		}
-		else
+		else if (line)
 		{
-			fd_printf(fd[1], "%s\n", line);
+			//dprintf(fd[1],"%s\n", line);
+			// fd_printf(fd[1], "line %s\n", line);
+			ft_putstr_fd(line, fd[1]);
+			ft_putstr_fd("\n", fd[1]);
+			fprintf(stderr, "%s\n", line);
 			free(line);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/09/28 02:16:56 by asabri           ###   ########.fr       */
+/*   Updated: 2023/09/28 08:50:08 by asabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,6 @@ t_tree			*pipenode(t_tree *left, t_tree *right);
 void			add_back_redir(t_redir **lst, t_redir *new);
 t_redir			*ft_lastlst_redir(t_redir *node);
 bool			check_redir(t_token_type flage);
-
+int				run_cmd_sc(t_tree *tree, t_env **env, char **arg);
+void			exec_redir_sc(t_tree *tree, t_env **env);
 #endif
